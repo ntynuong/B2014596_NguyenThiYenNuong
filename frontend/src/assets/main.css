@@ -1,65 +1,16 @@
+
 *{
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   font-family:sans-serif;
 }
 .nav-item .nav-link{
-  /* color:black; */
   font-weight:bold;
 }
-h6{
-  color:grey;
-  font-size: small;
-  font-weight: 700;
-}
-/* footer */
-.footer{
-  background-color: antiquewhite;
-  padding-top:1cm;
-  padding-bottom: 3cm;
-}
-.footer li{
-  float:left;
-  list-style: none;
-}
-.footer li a{
-  color:black;
-  display:inline-block;
-  padding: 13px;
-  border: 2px solid black;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  margin: 0 9px;
-}
+
+
 .nav-top{
   background-color:white;
 }
 
-.services .card-body i{
-  font-size: 50px;
-  color: indianred;
 
-}
-.services .card-body p{
-  color: rgb(111, 111, 111);
-}
-.slider .product-slider h4{
-  font-family: "Pacifico-Regular" !important;
-  font-size: 60px;
-}
 
-/* san pham noi bat */
-.btn-left{
-  margin-left: -70px;
-}
-.btn-right{
-  margin-left: 70px;
-}
-
-/* about */
-.about .about-open img{
-  width:250px;
-  height:250px;
-}

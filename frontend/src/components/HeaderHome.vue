@@ -1,96 +1,49 @@
 <template>
-    <!-- <div class="nav-top sticky-top">
-
-
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-
-                <div class="logo">
-                    <a href="#">
-                        <img src="public/img/cafe1.png" class="img-thumbnail" width="80" height="80px" alt="">
-                    </a>
-                </div>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <router-link to="/">TRANG CHỦ</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/about">GIỚI THIỆU</router-link>
-                        </li>
-                        <li class="nav-item dropdown">
-
-                            <router-link to="/menu">THỨC UỐNG</router-link>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <router-link to="/coffee">COFFEE</router-link>
-                                <router-link to="/tea">TEA</router-link>
-
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/contact">LIÊN HỆ</router-link>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="d-flex search">
-                    <button class="btn btn-outline-danger" type="submit"><i class="bi bi-search"></i></button>
-                </div>
-
-
-                <div class="p-2">
-                    <router-link to="/login"><button class="btn btn-outline-danger" type="submit"><i
-                                class="bi bi-person-circle"></i></button></router-link>
-                </div>
-
-            </div>
-        </nav>
-    </div> -->
-
-    <div class="nav-top sticky-top">
-        <nav class="navbar navbar-expand-lg">
+    <header class="nav-top sticky-top test-2">
+        <nav class="navbar navbar-expand-lg text-white">
             <div class="container">
-
-
                 <div class="container-fluid">
                     <nav class="navbar navbar-expand-lg">
-
-
-
                         <div class="container" id="navbarNav1">
 
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item">
-                                    <h1 class="navbar-brand">1900 000</h1>
+                                    <div class="d-flex">
+                                        <i class="bi bi-telephone-inbound icon-phone"></i>
+                                        <h1 class="navbar-brand text-white hot-line">Hotline 1900 000</h1>
+                                    </div>
                                 </li>
                             </ul>
 
                             <ul class="navbar-nav mx-auto">
                                 <div class="logo">
-                                    <!-- <router-link to="/"><img src="/img/cafe1.png" class="img-thumbnail" width="80"
-                                            height="80px" alt=""></router-link> -->
-
-                                    <router-link to="/"><img src="/img/logo-jewelry.jpg" class="img-thumbnail" width="125"
+                                    <router-link to="/"><img src="/img/2.png" class="img-thumbnail" width="170"
                                             height="150px" alt=""></router-link>
                                 </div>
                             </ul>
 
-                            <ul class="navbar-nav ml-auto">
+                            <ul class="navbar-nav ml-auto d-flex">
+                                <LoginIcon></LoginIcon>
+
                                 <div class="d-flex search">
-                                    <router-link to="/cart"><button class="btn btn-outline-danger position-relative"
-                                            type="submit"><i class="bi bi-cart3"></i><span
-                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                0
-                                                <!-- <span class="visually-hidden">unread messages</span> -->
-                                            </span></button></router-link>
+                                    <button v-if="storedValue" class="btn btn-outline position-relative" type="submit"
+                                        @click="goToCart">
+                                        <i class="bi bi-cart3"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ totalQuantity }}
+                                        </span>
+                                    </button>
+                                    <button v-else class="btn btn-outline position-relative" type="submit"
+                                        @click="redirectToLogin">
+                                        <i class="bi bi-cart3"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            0
+                                        </span>
+                                    </button>
                                 </div>
+
                             </ul>
 
                         </div>
@@ -101,89 +54,196 @@
                         aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvasLg"
+                    <div class="offcanvas offcanvas-end " tabindex="-1" id="navbarOffcanvasLg"
                         aria-labelledby="offcanvasNavbarLabel">
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">MENU</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-
-
+                            <ul class="navbar-nav justify-content-center flex-grow-1 pe-3 ">
                                 <li class="nav-item active">
-                                    <router-link to="/" class="nav-link active" aria-current="page">TRANG CHỦ</router-link>
+                                    <router-link to="/" class="nav-link dropdown-item text-white">TRANG
+                                        CHỦ</router-link>
                                 </li>
+
+                                <li class="nav-item ">
+                                    <router-link to="/product2" class="nav-link dropdown-item text-white">SẢN
+                                        PHẨM</router-link>
+                                </li>
+
                                 <li class="nav-item">
-                                    <router-link to="/about" class="nav-link">GIỚI THIỆU</router-link>
+                                    <router-link to="/about" class="nav-link dropdown-item text-white">GIỚI
+                                        THIỆU</router-link>
                                 </li>
 
-
-
-
-                                <li class="nav-item dropdown">
-                                    <router-link to="/menu" class="nav-link dropdown-toggle" role="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        THỨC UỐNG
-                                    </router-link>
-                                    <ul class="dropdown-menu">
-                                        <li><router-link to="/tea" class="dropdown-item">TRÀ</router-link></li>
-                                        <li><router-link to="/coffee" class="dropdown-item">COFFEE</router-link></li>
-                                        <li><router-link to="/trangmieng" class="dropdown-item">TRÁNG MIỆNG</router-link>
-                                        </li>
-
-                                    </ul>
-                                </li>
                                 <li class="nav-item">
-                                    <router-link to="/contact" class="nav-link">LIÊN HỆ</router-link>
+                                    <router-link to="/contact" class="nav-link dropdown-item text-white">LIÊN
+                                        HỆ</router-link>
                                 </li>
                             </ul>
 
                             <div class="d-flex">
-                                <div class="d-flex">
-                                    <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
+                                <div class="d-flex search">
 
-                                    <router-link to="/search"><button class="btn btn-outline-danger" type="submit"><i
-                                                class="bi bi-search"></i></button></router-link>
+                                    <form class="d-flex" role="search">
+                                        <input class="form-control" type="text" v-model="searchProduct"
+                                            placeholder="Tìm sản phẩm" aria-label="Search">
+                                        <button @click.prevent="searchProducts"
+                                            class="btn btn-outline-success text-white icon-search" type="submit"><i
+                                                class="bi bi-search"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="d-lg-none">
+                                <div class="text-white">
+                                    <router-link class="nav-link " to="/login">Đăng
+                                        Nhập</router-link>
                                 </div>
 
-                                <!-- <div class="">
-                                    <router-link to="/login"><button class="btn btn-outline-danger" type="submit"><i
-                                                class="bi bi-person-circle"></i></button></router-link>
-                                </div> -->
-
-                                <LoginIcon></LoginIcon>
-
+                                <div class="nav-item">
+                                    <router-link class="nav-link" to="/register">Đăng Ký</router-link>
+                                </div>
 
                             </div>
 
-
-                            <!-- <div class="d-flex search"> -->
-                            <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
-
-                            <!-- <router-link to="/search"><button class="btn btn-outline-danger" type="submit"><i
-                                            class="bi bi-search"></i></button></router-link>
-                            </div>
-
-                            <div class=" p-2">
-                                <router-link to="/login"><button class="btn btn-outline-danger" type="submit"><i
-                                            class="bi bi-person-circle"></i></button></router-link>
-                            </div> -->
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </nav>
-    </div>
-    <router-view></router-view>
+
+
+    </header>
 </template>
 
 <script>
 import LoginIcon from '@/components/LoginIcon.vue';
+import CategoryService from '@/services/category.service';
+import { useAuthStore } from '../stores/auth';
+import { useCartStore } from '../stores/cart';
+import { ref, watch, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'HeaderHome',
-    components: { LoginIcon }
+    components: { LoginIcon },
+
+    setup() {
+        const totalQuantity = ref(0);
+        const cartItems = ref([]);
+        const category = '';
+        const categories = ref([]);
+        const router = useRouter();
+
+        const searchProduct = ref(''); // Biến reactive để lưu trữ giá trị nhập liệu tìm kiếm
+
+        // const isLoggedIn = computed(() => {
+        //     return useAuthStore().isLoggedIn;
+        // });
+
+        const userId = localStorage.getItem('userId');
+        const storedValue = ref(localStorage.getItem('isLoggedIn') === 'true');
+
+        const goToCart = () => {
+            router.push('/cart');
+        };
+
+        const redirectToLogin = () => {
+            router.push('/login');
+        };
+
+        const fetchgetNameCategorys = async () => {
+            try {
+                categories.value = await CategoryService.getNameCategorys();
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const cartStore = useCartStore();
+        const getTotalQuantity = computed(() => {
+            return cartStore.getTotalQuantity;
+        });
+
+        watch(getTotalQuantity, (newTotalQuantity) => {
+            totalQuantity.value = newTotalQuantity;
+        });
+
+        onMounted(() => {
+            // Lấy trạng thái đăng nhập từ local storage khi component được mounted
+            storedValue.value = localStorage.getItem('isLoggedIn') === 'true';
+
+
+            fetchgetNameCategorys();
+
+
+
+        });
+
+
+
+        const searchProducts = (event) => {
+            event.preventDefault(); // Ngăn chặn gửi form mặc định
+
+            if (searchProduct.value === '') {
+                alert("Vui lòng nhập sản phẩm cần tìm kiếm");
+            } else {
+                const query = { search: searchProduct.value }; // Hàm thực hiện tìm kiếm
+
+                console.log("query", query);
+                router.push({ path: '/search', query });
+
+
+                // Xóa nội dung trong thanh tìm kiếm
+                searchProduct.value = '';
+            }
+
+
+        };
+
+        return {
+            totalQuantity,
+            // isLoggedIn,
+            goToCart,
+            redirectToLogin,
+
+            searchProduct,
+            searchProducts,
+
+            userId,
+            storedValue,
+        };
+    },
+
 
 };
 </script>
+<style scoped>
+.test-2 {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.auth {
+    color: white;
+}
+
+.icon-phone {
+    font-size: 35px;
+}
+
+.hotline {
+    margin-right: 5px;
+}
+
+.icon-search {
+    /* background-color: white; */
+    /* color: #04AA6D; */
+
+    /* border: 1px solid white; */
+}
+</style>
