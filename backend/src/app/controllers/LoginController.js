@@ -10,25 +10,19 @@ exports.login = async (req, res, next) => {
     const userService = new UserService(MongoDB.client);
     const { email, password } = req.body;
 
-    // const user = await userService.findOne({ email });
     const user = await userService.findByEmail(email);
-    // console.log(user);
-    // console.log(password);
-    // console.log(user.password);
+
 
 
     if (!user) {
         return next(new ApiError(404, "Tài khoản không tồn tại"));
     } else {
-        // console.log(user.password);
-        // const isPasswordValid = await this.comparePassword(password, user.hashedPassword);
+
         const isPasswordValid = await userService.comparePassword(password, user.password);
 
         if (!isPasswordValid) {
             return next(new ApiError(400, "Đăng nhập không thành công, bạn đã nhập sai mật khẩu! Vui lòng đăng nhập lại."));
-            // return res.status(400).send({ message: "Dang nhap khong thanh cong, ban da nhap sai mat khau! Vui long dang nhap lai." });
         }
-        // return next(new ApiError(200, "Dang nhap thanh cong"));
 
 
         // Tạo payload cho JWT
@@ -64,7 +58,6 @@ exports.loginAdmin = async (req, res, next) => {
         const isPasswordValid = await adminService.comparePassword(password, admin.password);
 
         if (!isPasswordValid) {
-            // throw new Error('Mật khẩu không chính xác.');
             return next(new ApiError(400, "Đăng nhập không thành công, bạn đã nhập sai mật khẩu! Vui lòng đăng nhập lại."));
         }
 

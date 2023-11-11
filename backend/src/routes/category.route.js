@@ -12,9 +12,7 @@ router.route('/')
     .post(categorys.createCategory);
 
 router.route('/:id')
-    .get(categorys.findProduct)
-//     .put(categorys.updateProduct)
-// .delete(categorys.deleteProduct);
+    .get(categorys.findProduct);
 
 module.exports = router;
 

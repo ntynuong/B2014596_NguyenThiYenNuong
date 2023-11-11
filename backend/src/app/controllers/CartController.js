@@ -151,30 +151,6 @@ exports.updateCart = [upload.none(), async (req, res, next) => {
 
 
 
-        // // const { productId } = req.params.productId;
-
-        // // const { userId } = req.params.userId;
-
-        // const { userId, productId } = req.params;
-        // const { quantity } = paseInt(req.body.data);
-        // console.log("quantity", quantity);
-
-        // const cartService = new CartService(MongoDB.client);
-
-        // // Kiểm tra nếu sản phẩm có tồn tại trong giỏ hàng của người dùng
-        // const existingCartItem = await cartService.getCartItem(userId, productId);
-
-        // console.log("existingCartItem", existingCartItem);
-        // if (!existingCartItem) {
-        //     throw new Error('Sản phẩm không tồn tại trong giỏ hàng');
-        // } else {
-        //     console.log("ike");
-        //     const result = await cartService.updateCartItemQuantity(userId, productId, quantity); // Gọi lại phương thức addToCart
-        //     if (result) {
-        //         return res.send({ status: 200, message: "Cập nhật thành công" });
-        //     }
-        // }
-
     } catch (error) {
         return next(
             new ApiError(500, "Đã xảy ra lỗi khi cập nhật sản phẩm trong giỏ hàng")

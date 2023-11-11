@@ -11,7 +11,6 @@ class CartService {
             userId: payload.userId,
             productId: payload.productId,
             quantity: payload.quantity,
-            // note: payload.note,
         };
 
         Object.keys(cartItem).forEach(
@@ -75,7 +74,6 @@ class CartService {
             userId: userId,
             productId: productId
         });
-        // console.log("resultProduct", result);
         return result;
     }
 
@@ -83,19 +81,10 @@ class CartService {
         const result = await this.Cart.deleteMany({
             userId: userId
         });
-        // console.log("resultProduct", result);
         return result;
     }
 
-    // async findOne(condition) {
-    //     try {
-    //         const user = await this.Cart.findOne({ userId: condition });
-    //         // return user;
-    //         return await user.toArray();
-    //     } catch (error) {
-    //         throw new Error('Lỗi khi tìm kiếm người dùng.');
-    //     }
-    // }
+
 
 }
 

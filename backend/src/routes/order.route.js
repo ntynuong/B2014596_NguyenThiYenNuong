@@ -12,7 +12,6 @@ router.route('/:idorder')
 router.route('/')
     .get(orders.getAllOrders)
     .post(orders.createOrder);
-// .delete(users.deleteAll);
 
 
 

@@ -13,7 +13,6 @@ exports.createCategory = [upload.none(), async (req, res, next) => {
 
     const categoryExits = await categoryService.findByName(categoryname);
     if (categoryExits) {
-        // return res.send({ status: 400, message: "Tên danh mục đã tồn tại" })
         return next(
             new ApiError(400, "Tên danh mục đã tồn tại")
         )
@@ -77,16 +76,13 @@ exports.findProduct = async (req, res, next) => {
         }
 
         const categoryService = new CategoryService(MongoDB.client);
-        // console.log("idanhmuc", categoryId)
         const category = await categoryService.findCategoryById(categoryId);
-        // console.log("category ", category);
         if (!category) {
             return res.send({ status: 404, message: "Không tìm thấy danh mục" });
         }
 
         const categoryName = category.categoryname;
 
-        // console.log("categoryname ", categoryName);
 
 
         const productService = new ProductService(MongoDB.client);
@@ -109,7 +105,6 @@ exports.findProduct = async (req, res, next) => {
             document.images = images;
         }
 
-        // console.log("documents:", documents);
         return res.status(200).json(documents);
 
     } catch (error) {

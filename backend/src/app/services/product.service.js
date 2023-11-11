@@ -18,23 +18,7 @@ class ProductService {
             notes: payload.notes || '',
         };
 
-        // if (payload.discounted) {
-        //     product.notes = "Giảm giá"; // Thêm ghi chú giảm giá
-        // }
 
-        // if (payload.isNew) {
-        //     product.notes = "Sản phẩm mới"; // Thêm ghi chú sản phẩm mới
-        // }
-
-        // // Kiểm tra nếu sản phẩm không mới hoặc không giảm giá
-        // if (!payload.isNew && !payload.discounted) {
-        //     delete product.notes; // Bỏ qua trường ghi chú
-        // }
-
-        // Kiểm tra xem trường ghi chú có được cung cấp hay không
-        // if (payload.notes) {
-        //     product.notes = payload.notes; // Sử dụng giá trị từ trường ghi chú
-        // }
 
         Object.keys(product).forEach(
             (key) => (product[key] === undefined && delete product[key])
@@ -97,6 +81,7 @@ class ProductService {
     }
 
     async findCategoryProduct(filter) {
+        console.log("loc", filter);
         const products = await this.Product.find(filter).toArray();
 
         return products;

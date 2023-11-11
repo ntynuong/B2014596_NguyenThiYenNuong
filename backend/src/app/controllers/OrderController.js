@@ -23,7 +23,6 @@ exports.createOrder = [upload.none(), async (req, res, next) => {
         if (document) {
             const orderData = {
                 orderId: document.insertedId.toString(),
-                // quantity: quantity,
                 grandTotalPrice: parseInt(grandTotalPrice.replace(/\./g, '')),
 
                 totalPrice: parseInt(totalPrice.replace(/\./g, '')),

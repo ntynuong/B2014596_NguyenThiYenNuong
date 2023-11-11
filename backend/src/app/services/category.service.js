@@ -17,18 +17,7 @@ class CategoryService {
         return category;
     }
 
-    // async create(payload) {
 
-    //     const category = this.extractCategoryData(payload);
-
-    //     const result = await this.Category.findOneAndUpdate(
-    //         category,
-    //         { $set: { password: hashedPassword } }, // Luu mat khau da ma hoa
-    //         { returnDocument: "after", upsert: true }
-    //     );
-    //     console.log(result);
-    //     return result;
-    // }
 
     async create(payload) {
         try {
@@ -56,14 +45,6 @@ class CategoryService {
         return await cursor.toArray();
     }
 
-    // async findCategoryById(categoryId) {
-    //     console.log("categoryId", categoryId);
-    //     // return this.Category.findById(categoryId);
-
-    //     const category = await findCategoryById(categoryId);
-    //     console.log(category);
-
-    // }
 
 
     async findCategoryById(id) {
@@ -73,10 +54,6 @@ class CategoryService {
     }
 }
 
-// const category = await this.Category.findOne({
-//     _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-// });
-// console.log(category);
-// return category;
+
 
 module.exports = CategoryService;

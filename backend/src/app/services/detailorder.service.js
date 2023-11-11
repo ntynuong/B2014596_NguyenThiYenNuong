@@ -9,10 +9,8 @@ class DetailOrderService {
 
         const detailorder = {
             orderId: payload.orderId,
-            // quantity: payload.quantity,
             grandTotalPrice: payload.grandTotalPrice,
             totalPrice: payload.totalPrice,
-            // ordercartItems: payload.ordercartItems.map(item => ({ productId: item.productId, quantity: item.quantity })),
             ordercartItems: payload.ordercartItems,
             discount: payload.discount || 0,
 

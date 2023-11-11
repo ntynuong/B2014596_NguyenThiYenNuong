@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-// const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars');
 
@@ -11,8 +10,7 @@ const config = require('./app/config/index');
 const MongoDB = require("./app/utils/mongodb.util");
 
 
-// const contactsRouter = require('./app/routes/contact.route');
-
+const notesRouter = require('./routes/notes.route');
 const ordersRouter = require('./routes/order.route');
 const cartsRouter = require('./routes/cart.route');
 const categorysRouter = require('./routes/category.route');
@@ -23,11 +21,6 @@ const registerRouter = require('./routes/register.route');
 const ApiError = require('./app/api-error');
 
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }))
-
-
-// const route = require('./routes');
 
 
 async function startServer() {
@@ -51,11 +44,7 @@ startServer();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(express.static('public'));
 
-
-// chu y
-// config req.body
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
@@ -75,31 +64,9 @@ app.set('views', path.join(__dirname, 'resources/views'));
 
 
 
-// let urlImage;
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     if (file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-//       cb(null, 'public/images');
-//     } else {
-//       cb(new Error('not image'), false);
-//     }
-
-//   },
-//   filename: function (req, file, cb) {
-//     urlImage = Date.now() + '.jpg';
-//     cb(null, urlImage);
-//   }
 
 
-// });
 
-// const upload = multer({ storage: storage });
-
-// Route init (khoi tao tuyen duong)
-// route(app);
-
-
-// app.use('/api/contacts', contactsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
@@ -107,6 +74,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/categorys', categorysRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/api/orders', ordersRouter);
+app.use('/api/notes', notesRouter);
 
 
 // handle 404 response

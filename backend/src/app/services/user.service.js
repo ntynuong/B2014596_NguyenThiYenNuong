@@ -1,4 +1,3 @@
-// const User = require("../models/User");
 const { ObjectId } = require("mongodb");
 const bcrypt = require('bcrypt');
 
@@ -24,7 +23,6 @@ class UserService {
             password: payload.password,
             address: payload.address,
             phone: payload.phone,
-            // role: payload.role,
             role: "false",
         };
 
@@ -61,10 +59,6 @@ class UserService {
     }
 
     async create(payload) {
-        // const emailExits = await this.User.findOne({ email: payload.email});
-
-        // if(emailExits)
-
 
 
 
@@ -78,14 +72,10 @@ class UserService {
             { $set: { password: hashedPassword } }, // Luu mat khau da ma hoa
             { returnDocument: "after", upsert: true }
         );
-        // return result.value;
         return result;
     }
 
-    // async login(email, password) {
 
-
-    // }
 
     async comparePassword(password, hashedPassword) {
         const isMatch = await bcrypt.compare(password, hashedPassword);
@@ -113,93 +103,6 @@ class UserService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    // constructor(client) {
-    //     this.User = client.db().collection("users");
-    // }
-
-    // // Dinh nghia cac phuong thuc truy xuat CSDL su dung mongodb API
-
-    // extractUserData(payload) {
-    //     const user = {
-    //         name: payload.fullname,
-    //         email: payload.email,
-    //         address: payload.address,
-    //         phone: payload.phone
-    //     };
-
-    //     // Remove undefined fields
-    //     Object.keys(user).forEach(
-    //         (key) => (user[key] === undefined && delete user[key])
-    //     );
-    //     return user;
-    // }
-
-    // async create(payload) {
-    //     const user = this.extractUserData(payload);
-    //     const result = await this.User.findOneAndUpdate(
-    //         user,
-    //         // { $set: { favorite: user.favorite === true } },
-    //         { returnDocument: "after", upsert: true }
-    //     );
-    //     return result.value;
-    // }
-
-    // async find(filter) {
-    //     const cursor = await this.User.find(filter);
-    //     return await cursor.toArray();
-    // }
-
-    // async findByName(name) {
-    //     return await this.find({
-    //         name: { $regex: new RegExp(name), $options: "i" },
-    //     });
-    // }
-
-    // async findById(id) {
-    //     return await this.User.findOne({
-    //         _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-    //     });
-    // }
-
-    // async update(id, payload) {
-    //     const filter = {
-    //         _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-    //     };
-    //     const update = this.extractUserData(payload);
-    //     const result = await this.User.findOneAndUpdate(
-    //         filter,
-    //         { $set: update },
-    //         { returnDocument: "after" }
-    //     );
-    //     return result;
-
-    // }
-
-    // async delete(id) {
-    //     const result = await this.User.findOneAndDelete({
-    //         _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-    //     });
-    //     return result;
-    // }
-
-    // async findFavorite() {
-    //     return await this.find({ favorite: true });
-    // }
-
-    // async deleteAll() {
-    //     const result = await this.User.deleteMany({});
-    //     return result.deletedCount;
-    // }
 }
 
 module.exports = UserService;

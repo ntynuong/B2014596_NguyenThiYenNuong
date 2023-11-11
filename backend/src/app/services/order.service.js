@@ -71,10 +71,7 @@ class OrderService {
     }
 
     async findByUserId(userId) {
-        // console.log("id", id);
-        // return await this.Order.findOne({
-        //     _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
-        // });
+
 
         const result = await this.Order.find({ userId: userId }).toArray();
         return result;

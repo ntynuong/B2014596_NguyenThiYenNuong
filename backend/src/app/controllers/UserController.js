@@ -1,5 +1,4 @@
-// const User = require('../models/User');
-
+const AdminService = require("../services/admin.service");
 const UserService = require("../services/user.service");
 const MongoDB = require("../utils/mongodb.util");
 const ApiError = require("../api-error");
@@ -18,6 +17,29 @@ exports.getAllUsers = async (req, res, next) => {
         }
         else {
             documents = await userService.find({});
+        }
+
+        return res.status(200).json(documents);
+
+    } catch (error) {
+        return next(
+            new ApiError(500, "An error occurred while retrieving contacts")
+        );
+    }
+
+};
+
+exports.getAllAdmins = async (req, res, next) => {
+    let documents = [];
+
+    try {
+        const adminService = new AdminService(MongoDB.client);
+        const { fullname } = req.query;
+        if (fullname) {
+            documents = await adminService.findByName(fullname);
+        }
+        else {
+            documents = await adminService.find({});
         }
 
         return res.status(200).json(documents);
@@ -58,24 +80,11 @@ exports.updateUser = [upload.none(), async (req, res, next) => {
 exports.findOneUser = async (req, res, next) => {
     try {
         const userService = new UserService(MongoDB.client);
-        // console.log("id", req.params.id);
         const document = await userService.findById(req.params.id);
         if (!document) {
             return next(new ApiError(404, "Không tìm thấy người dùng"));
         }
-        // console.log(document);
 
-
-        // Lấy hình ảnh tương ứng với id trong collection HinhHangHoa
-        // const imageService = new ImageService(MongoDB.client);
-        // const images = await imageService.findByMSHH(req.params.id);
-
-        // // Gắn hình ảnh vào thông tin sản phẩm
-        // document.images = images;
-
-        // console.log("documentfind", document);
-
-        // return res.send(document);
         return res.status(200).json(document);
 
     } catch (error) {

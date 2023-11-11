@@ -5,7 +5,6 @@ const products = require('../app/controllers/ProductController');
 const router = express.Router();
 
 
-
 router.route('/:id')
     .get(products.findOneProduct)
     .put(products.updateProduct)
@@ -18,10 +17,11 @@ router.route('/search')
     .post(products.searchProduct);
 
 
+
+
 router.route('/')
     .get(products.getAllProducts)
     .post(products.createProduct);
-// .delete(users.deleteAll);
 
 
 module.exports = router;
