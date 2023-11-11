@@ -169,54 +169,7 @@ export default {
             }
         },
 
-        // async register() {
-        //     this.showError = false;
 
-
-
-
-        //     try {
-        //         // const response = await axios.post('/api/register',
-        //         const response = await axios.post('http://localhost:3000/api/register',
-        //             {
-        //                 fullname: this.fullname,
-        //                 email: this.email,
-        //                 password: this.password,
-        //                 address: this.address,
-        //                 phone: this.phone
-        //             });
-
-        //         if (response.status === 200) {
-        //             alert('Đăng ký tài khoản thành công');
-        //             this.$router.push('/');
-        //         }
-
-        //         else {
-        //             console.error('Error:', response.status);
-        //         }
-
-
-        //     } catch (error) {
-        //         if (error.response.status === 400) {
-        //             alert('Tài khoản đã tồn tại');
-        //             this.$router.push('/register');
-        //             this.fullname = '';
-        //             this.email = '';
-        //             this.password = '';
-        //             this.address = '';
-        //             this.phone = '';
-
-        //         }
-
-        //         else {
-        //             alert('Lỗi không xác định. Vui lòng thử lại sau!');
-        //             console.error('Error:', error);
-        //         }
-
-        //     }
-
-
-        // }
     }
 }
 

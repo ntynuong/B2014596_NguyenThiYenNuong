@@ -1,16 +1,12 @@
 const home = [
   {
     path: '/',
-    // name: 'Home',
     component: () => import('../layouts/User.vue'),
     children: [
       {
         path: '',
-        //         // con khong co /
-        //         path: 'users',
         name: 'Home',
         component: () => import('../components/Home.vue')
-        //         c
       },
 
       {
@@ -18,18 +14,6 @@ const home = [
         name: 'About',
         component: () => import('../components/About.vue')
       },
-
-      // {
-      //   path: 'login',
-      //   name: 'Login',
-      //   component: () => import('../components/Login.vue')
-      // },
-
-      // {
-      //   path: 'register',
-      //   name: 'Register',
-      //   component: () => import('../components/Register.vue')
-      // },
 
       {
         path: 'cart',
@@ -55,11 +39,7 @@ const home = [
         component: () => import('../components/Product2.vue'),
       },
 
-      // {
-      //   path: 'checkout',
-      //   name: 'Checkout',
-      //   component: () => import('../components/Checkout.vue'),
-      // },
+
 
       {
         path: 'checkout/:id',
@@ -73,11 +53,7 @@ const home = [
         component: () => import('../components/Profile.vue'),
       },
 
-      // {
-      //   path: 'profile',
-      //   name: 'Profile',
-      //   component: () => import('../components/Profile.vue'),
-      // },
+
 
 
       {

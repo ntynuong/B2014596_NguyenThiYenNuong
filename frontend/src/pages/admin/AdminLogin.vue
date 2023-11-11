@@ -15,9 +15,6 @@
 
                 <button @click="submitForm">Đăng Nhập</button>
 
-                <!-- <h6 class="register">Bạn chưa có tài khoản? Đăng ký<router-link to="/register"><span class="register-here">
-                            tại
-                            đây</span></router-link></h6> -->
 
                 <router-link to="/">
                     <p class="comeback"><i class="bi bi-arrow-left-short"></i> trở về trang chủ</p>

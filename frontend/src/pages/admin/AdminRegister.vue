@@ -22,9 +22,7 @@
 
                 <button @click="submitRegister">Đăng Ký</button>
 
-                <!-- <h6 class="register">Bạn đã có tài khoản? Đăng nhập<router-link to="/login"><span class="register-here">
-                            tại
-                            đây</span></router-link></h6> -->
+
 
                 <router-link to="/admin/users">
                     <p class="comeback"><i class="bi bi-arrow-left-short"></i> trở về trang quản lí người dùng</p>
@@ -82,7 +80,6 @@ export default {
             event.preventDefault();
 
             // Khai báo và gán giá trị ban đầu cho biến error
-            // let error = 'Vui lòng nhập đầy đủ thông tin';
 
             // Kiểm tra nhập đủ thông tin và định dạng email và số điện thoại
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -142,9 +139,7 @@ export default {
                             this.$router.push('/admin/login');
                         }
 
-                        // else {
-                        //     console.error('Error:', response.error);
-                        // }
+
 
                     })
                     .catch(error => {
@@ -160,8 +155,6 @@ export default {
                             // this.chucvu = ''
 
                         } else {
-                            // console.error('Error:', error);
-                            // alert('Lỗi không xác định. Vui lòng thử lại sau!');
                             this.Error = ('Lỗi không xác định. Vui lòng thử lại sau!');
                         }
 

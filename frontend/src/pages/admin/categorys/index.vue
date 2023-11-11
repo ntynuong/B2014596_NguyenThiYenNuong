@@ -11,7 +11,7 @@
                     <tr>
                         <th></th>
                         <th>Danh Mục</th>
-                        <th></th>
+                        <th>Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,19 +25,13 @@
                     </tr>
 
 
-                    <!-- <tr <router-link :to="{ name: 'updateProduct', params: { id: category._id } }">
-                    v-for="(category, index) in categorys" :key="category.id">
-                    <th>{{ index + 1 }}</th>
-                    <td>{{ category.categoryname }}</td>
-                    </router-link>
-                </tr> -->
+
 
                 </tbody>
             </table>
         </div>
     </div>
 </template>
- <!-- @click="detailCategory(category._id)"  -->
 
 <script>
 import CategoryService from '@/services/category.service';
@@ -68,11 +62,7 @@ export default {
             }
         },
 
-        // detailCategory() {
-        //     this.$router.push('/admin/detailcategory');
 
-
-        // }
     },
 
 

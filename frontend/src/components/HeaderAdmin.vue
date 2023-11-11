@@ -106,11 +106,8 @@ export default defineComponent({
 
 
         const logout = () => {
-            // authStore.logout();
-            // localStorage.removeItem('isLoggedIn'); // Xóa trạng thái đăng nhập từ local storage
-            // localStorage.removeItem('userId'); // Xóa người dùng từ local storage
+
             router.push('/admin/login'); // Điều hướng tới trang đăng nhập sau khi đăng xuất
-            // localStorage.setItem('isLoggedIn', 'false'); // Xóa trạng thái đăng nhập từ local storage
             localStorage.removeItem('isLoggedIn'); // Xóa trạng thái đăng nhập từ local storage
             localStorage.removeItem('adminId'); // Xóa người dùng từ local storage
             localStorage.removeItem('role'); // Xóa vai trò từ local storage

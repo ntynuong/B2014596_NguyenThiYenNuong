@@ -1,71 +1,79 @@
 <template>
     <div class="container">
-        <h1>Them san pham</h1>
 
-        <div v-if="showError" class="container error-message alert alert-danger" role="alert">
-            {{ error }}
+        <h3 class="title">Thêm sản phẩm</h3>
+        <div class=" row product">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div v-if="showError" class="container error-message alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+
+                <form enctype="multipart/form-data" @submit="addProduct">
+                    <div class="mb-3 form-group">
+                        <label for="exampleFormControlSelect1" class=" title-product">Danh Mục:</label>
+                        <select class="form-select" id="exampleFormControlSelect1" v-model="category">
+                            <option v-for="category in categories" :key="category.id"> {{ category.categoryname }}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label title-product">Tên sản phẩm: </label>
+                        <div class="name-product-input">
+                            <input type="text" class="form-control" v-model="productname">
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label title-product">Giá: </label>
+                        <div class="price-product-input">
+                            <input type="text" class="form-control" v-model="price">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label title-product">Số lượng: </label>
+                        <div class="quantity-product-input">
+                            <input type="text" class="form-control" v-model="Quantity">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label title-product">Mô tả: </label>
+                        <div class="describe-product-input">
+                            <textarea v-model="describe" class="form-control" rows="6"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label title-product">Ghi chú: </label>
+                        <div class="notes-product-input d-flex">
+                            <textarea v-model="notes" class="form-control" placeholder="Không bắt buộc" rows="2"></textarea>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="mb-3">
+                        <label class="form-label title-product">Hình Ảnh: </label>
+                        <div class="category-product-input">
+                            <input type="file" accept="image/*" name="imageURL" class="form-control"
+                                @change="handleFileChange">
+                            <img :src="temporaryImageURL" alt="Product Image" v-if="temporaryImageURL" class="image-file">
+                        </div>
+                    </div>
+
+                    <button type="submit" class=" btn save">Lưu</button>
+                    <router-link to="/admin/products"><button class="cancel btn">Hủy</button></router-link>
+
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
         </div>
 
-        <form enctype="multipart/form-data" @submit="addProduct">
-            <div class="mb-3 form-group">
-                <label for="exampleFormControlSelect1">Danh Mục:</label>
-                <select class="form-control" id="exampleFormControlSelect1" v-model="category">
-                    <option v-for="category in categories" :key="category.id"> {{ category.categoryname }}</option>
-                </select>
-            </div>
 
-            <div class="mb-3">
-                <label class="form-label">Tên sản phẩm: </label>
-                <div class="name-product-input">
-                    <input type="text" class="form-control" v-model="productname">
-                </div>
-
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Giá: </label>
-                <div class="price-product-input">
-                    <input type="text" class="form-control" v-model="price">
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Số lượng: </label>
-                <div class="quantity-product-input">
-                    <input type="text" class="form-control" v-model="Quantity">
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Mô tả: </label>
-                <div class="describe-product-input">
-                    <textarea v-model="describe"></textarea>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Ghi chú: </label>
-                <div class="notes-product-input d-flex">
-                    <textarea v-model="notes" style="height:200px"></textarea>
-                    <p>(Không bắt buộc)</p>
-                </div>
-            </div>
-
-
-
-
-            <div class="mb-3">
-                <label class="form-label">Hình Ảnh: </label>
-                <div class="category-product-input">
-                    <input type="file" accept="image/*" name="imageURL" class="form-control" @change="handleFileChange">
-                    <img :src="temporaryImageURL" alt="Product Image" v-if="temporaryImageURL" class="image-file">
-                </div>
-            </div>
-
-            <button type="submit" class=" btn btn-primary">Lưu</button>
-            <router-link to="/admin/products"><button class="cancel btn btn-danger">Hủy</button></router-link>
-
-        </form>
     </div>
 </template>
 
@@ -83,7 +91,7 @@ export default {
         return {
             productname: '',
             // price: '',
-            price: 0,
+            price: '',
             Quantity: '',
             describe: '',
             notes: '',
@@ -181,6 +189,9 @@ export default {
 
 .cancel {
     margin-left: 3px;
+    color: red;
+    font-weight: bold;
+    background-color: rgb(250, 194, 174);
 }
 
 .image-file {
@@ -188,5 +199,25 @@ export default {
     height: 300px;
     margin-top: 5px;
 
+}
+
+.product {
+    margin: 30px 0;
+}
+
+.title {
+    margin-top: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.title-product {
+    font-weight: bold;
+}
+
+.save {
+    color: rgb(20, 20, 255);
+    font-weight: bold;
+    background-color: rgb(179, 205, 255);
 }
 </style>

@@ -34,6 +34,10 @@ class ProductService {
         return (await this.api.get(`/category/${categoryname}/${product}`)).data;
     }
 
+    async findProductByNotes() {
+        return (await this.api.get('/notes')).data;
+    }
+
     async searchProduct(formData) {
         return (await this.api.post(`/search`, formData)).data;
     }

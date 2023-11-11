@@ -5,6 +5,7 @@
             <table class="table table-hover table-bordered text-center">
                 <thead class="dark">
                     <tr>
+                        <th></th>
                         <th>Khách Hàng</th>
                         <th>Số Điện Thoại</th>
                         <th>Địa chỉ</th>
@@ -15,11 +16,12 @@
 
                         <th>Nhân Viên</th>
                         <th>Trạng Thái</th>
-                        <th>Thao Tác</th>
+                        <th colspan="2">Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in orderItems" :key="item._id">
+                        <th>{{ index + 1 }}</th>
                         <td>{{ item.order.fullname }}</td>
                         <td>{{ item.order.phone }}</td>
                         <td>{{ item.order.address }}</td>
@@ -35,9 +37,8 @@
 
                         <td>
                             <div class="d-flex">
-                                <button class="btn btn-warning" @click="updateOrder(item.order._id)">Xử lí</button>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    :data-bs-target="`#exampleModal${index}`">
+
+                                <button class="btn watch" data-bs-toggle="modal" :data-bs-target="`#exampleModal${index}`">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
 
@@ -47,9 +48,10 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Các sản phẩm trong đơn
+                                                <h3 class="modal-title fs-5 " id="exampleModalLabel">Các
+                                                    sản phẩm trong đơn
                                                     hàng
-                                                </h1>
+                                                </h3>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -58,6 +60,7 @@
                                                     <table class="table table-hover text-center">
                                                         <thead class="dark">
                                                             <tr>
+                                                                <th></th>
                                                                 <th>Hình Ảnh</th>
                                                                 <th>Tên</th>
                                                                 <th>Số lượng</th>
@@ -67,8 +70,9 @@
 
                                                         </thead>
                                                         <tbody>
-                                                            <tr v-for="product in item.details.ordercartItems"
+                                                            <tr v-for="(product, index) in item.details.ordercartItems"
                                                                 :key="product.productId">
+                                                                <td>{{ index + 1 }}</td>
                                                                 <td>
                                                                     <img :key="image"
                                                                         :src="`http://localhost:3000/images/${product.images}`"
@@ -76,11 +80,13 @@
                                                                 </td>
                                                                 <td>{{ product.productname }}</td>
                                                                 <td>{{ product.quantity }}</td>
-                                                                <td>{{ product.price.toLocaleString("vi-VN") }}</td>
-                                                                <td>{{ product.subtotalPrice.toLocaleString("vi-VN") }}
+                                                                <td>{{ product.price.replace(/\s/g, '.') }}&#8363;</td>
+                                                                <td>{{ product.subtotalPrice.toLocaleString("vi-VN")
+                                                                }}&#8363;
                                                                 </td>
                                                             </tr>
                                                             <tr>
+                                                                <th></th>
                                                                 <th></th>
                                                                 <th></th>
                                                                 <th></th>
@@ -99,6 +105,7 @@
                                 </div>
                             </div>
                         </td>
+                        <td><button class="btn update" @click="updateOrder(item.order._id)">Xử lí</button></td>
 
                     </tr>
                 </tbody>
@@ -178,5 +185,22 @@ h3 {
 
 .order {
     margin: 30px 0;
+}
+
+.btn {
+    font-size: 16px;
+}
+
+.watch {
+    color: rgb(20, 20, 255);
+    font-weight: bold;
+    background-color: rgb(179, 205, 255);
+}
+
+.update {
+    font-size: 10px;
+    color: rgb(216, 77, 77);
+    font-weight: bold;
+    background-color: rgb(235, 154, 154);
 }
 </style>

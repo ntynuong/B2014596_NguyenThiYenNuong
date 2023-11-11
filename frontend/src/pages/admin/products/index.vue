@@ -2,12 +2,11 @@
     <div class="container">
         <h3>Quản lý sản phẩm</h3>
         <!-- <p>Số lượng sản phẩm: {{ productCount }}</p> -->
-        <div class="row">
+        <div class="row add-product">
             <div class="col-2"><button @click="addProduct" class="btn btn-success">Thêm sản phẩm</button></div>
             <div class="col-3">
                 <form class="d-flex" role="search">
-                    <!-- <input @input="searchProducts($event)" v-model="searchQuery" class="form-control me-2" type="search"
-                        placeholder="Nhập sản phẩm" aria-label="Search"> -->
+
                     <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Nhập sản phẩm"
                         aria-label="Search">
                     <button @click.prevent="searchProducts" class="btn btn-outline-success" type="submit"><i
@@ -28,6 +27,7 @@
             <table class="table table-hover table-bordered text-center ">
                 <thead class="dark">
                     <tr>
+                        <th></th>
                         <th>Hình Ảnh</th>
                         <th>Tên</th>
                         <th>Loại</th>
@@ -39,19 +39,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="product in products" :key="product._id">
+                    <tr v-for="(product, index) in products" :key="product._id">
+                        <td>{{ index + 1 }}</td>
                         <td>
                             <img :key="image" :src="`http://localhost:3000/images/${product.images}`"
                                 :alt="product.productname" class="product-image">
                         </td>
                         <td>{{ product.productname }}</td>
                         <td>{{ product.category }}</td>
-                        <td>{{ (product.price).toLocaleString('vi-VN') }}</td>
+                        <td>{{ (product.price).replace(/\s/g, '.') }}&#8363;</td>
                         <td>{{ product.describe }}</td>
                         <td>{{ product.Quantity }}</td>
                         <td>{{ product.notes }}</td>
                         <td class="d-flex">
-                            <!-- <button v-if="product._id" @click="deleteProduct(product._id)" class="btn btn-danger">Xóa</button> -->
                             <button v-if="product._id" @click="deleteProduct(product._id)" class="btn btn-danger"><i
                                     class="bi bi-trash3-fill"></i></button>
                             <router-link :to="{ name: 'updateProduct', params: { id: product._id } }">
@@ -96,17 +96,7 @@ export default {
         },
 
 
-        // async fetchgetAllProducts() {
-        //     try {
-        //         this.products = await ProductService.getAllProducts();
 
-        //         // tong so san sản phẩm
-        //         this.productCount = this.products.length;
-        //         console.log("product: ", this.products);
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
-        // },
 
 
         async deleteProduct(productId) {
@@ -123,24 +113,9 @@ export default {
         },
 
         async searchProducts(event) {
-            // event.preventDefault(); // Ngăn chặn gửi form mặc định
-
-            // if (searchProduct.value === '') {
-            //     alert("Vui lòng nhập sản phẩm cần tìm kiếm");
-            // } 
-            // if {
-            // const query = { search: searchProduct.value }; // Hàm thực hiện tìm kiếm
-
-            // const query = this.searchQuery; // Lấy giá trị từ trường tìm kiếm
-
-
-
-            // const formData = new FormData();
-            // formData.append('searchProduct', query);
 
 
             try {
-                // const response = await ProductService.searchProduct(formData);
                 const response = await ProductService.searchProduct({ searchProduct: this.searchQuery });
                 this.products = response;
                 this.searchProducts();
@@ -148,9 +123,6 @@ export default {
                 console.error(error);
             }
 
-            // Xóa nội dung trong thanh tìm kiếm
-            // searchProduct.value = '';
-            // }
 
 
         },
@@ -183,5 +155,9 @@ h3 {
 
 .product {
     margin: 30px 0;
+}
+
+.add-product {
+    margin-top: 30px;
 }
 </style>

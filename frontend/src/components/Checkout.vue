@@ -1,12 +1,7 @@
 <template>
     <div class="container">
-        <h3>THANH TOÁN</h3>
-        <hr>
-    </div>
-
-
-    <div class="container">
-        <div class="row">
+        <div class="row checkout">
+            <h3>THANH TOÁN</h3>
             <div class="col-30">
                 <div class="container">
                     <form>
@@ -15,13 +10,13 @@
                             <div class="col-50">
                                 <h4>Thông tin mua hàng</h4>
                                 <hr>
-                                <label for="fname"><i class="fa fa-user"></i> Tên</label>
+                                <label for="fname"><i class="fa fa-user"></i> Tên: </label>
                                 <input type="text" id="fname" name="firstname" v-model="fullname">
-                                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                                <label for="email"><i class="fa fa-envelope"></i> Email:</label>
                                 <input type="text" id="email" name="email" v-model="email">
-                                <label for="adr"><i class="fa fa-address-card-o"></i> Địa chỉ</label>
+                                <label for="adr"><i class="fa fa-address-card-o"></i> Địa chỉ giao hàng:</label>
                                 <input type="text" id="adr" name="address" v-model="address">
-                                <label for="city"><i class="fa fa-institution"></i> Số điện thoại</label>
+                                <label for="city"><i class="fa fa-institution"></i> Số điện thoại:</label>
                                 <input type="text" id="city" name="city" v-model="phone">
 
                             </div>
@@ -36,7 +31,7 @@
             <div class="col-70">
                 <div class="container">
                     <h4>Đơn hàng <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i>
-                            <b>{{ cartItems.length }}</b>
+                            <!-- <b>{{ cartItems.length }}</b> -->
                         </span>
                     </h4>
                     <hr>
@@ -60,7 +55,7 @@
                             </div>
 
                             <div class="col-lg-3">
-                                <p>{{ parseInt(item.price.replace(/\s/g, '')).toLocaleString('vi-VN') }}</p>
+                                <p>{{ parseInt(item.price.replace(/\s/g, '')).toLocaleString('vi-VN') }}&#8363;</p>
                             </div>
 
                             <div class="col-lg-3">
@@ -68,7 +63,7 @@
                             </div>
 
                             <div class="col-lg-3">
-                                <p>{{ subtotalPrice[index] }}</p>
+                                <p>{{ subtotalPrice[index] }}&#8363;</p>
                             </div>
 
                         </div>
@@ -81,8 +76,8 @@
                     </div>
 
                     <hr>
-                    <p>Tạm tính <span class="price" style="color:black"><b>{{ totalPrice }}</b></span></p>
-                    <p>Phí vận chuyển <span class="price" style="color:black"><b>30.000</b></span></p>
+                    <p>Tạm tính <span class="price" style="color:black"><b>{{ totalPrice }}&#8363;</b></span></p>
+                    <p>Phí vận chuyển <span class="price" style="color:black"><b>30.000&#8363;</b></span></p>
                     <hr>
 
                     <div>
@@ -105,7 +100,7 @@
                     </div>
 
                     <hr>
-                    <p>Tổng cộng <span class="price" style="color:black"><b>{{ grandTotalPrice }}</b></span></p>
+                    <p>Tổng cộng <span class="price" style="color:black"><b>{{ grandTotalPrice }}&#8363;</b></span></p>
 
                     <div>
                         <button class="btn" @click="createOrder">ĐẶT HÀNG</button>
@@ -455,5 +450,14 @@ span.price {
 
 .btn-discount:hover {
     background-color: #45a049;
+}
+
+h3 {
+    font-weight: bold;
+    text-align: center;
+}
+
+.checkout {
+    margin: 30px 0;
 }
 </style>

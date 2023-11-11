@@ -45,19 +45,10 @@ const admin = [
                 path: 'products',
                 name: 'Products',
                 component: () => import('../pages/admin/products/index.vue'),
-                // children: [
-                //     {
-                //         // con khong co /
-                //         path: 'addproduct',
-                //         name: 'addProduct',
-                //         component: () => import('../pages/admin/products/addproduct.vue')
-                //     }
 
-                // ]
             },
 
             {
-                // con khong co /
                 path: 'addproduct',
                 name: 'addProduct',
                 component: () => import('../pages/admin/products/addproduct.vue'),

@@ -9,6 +9,10 @@ class UserService {
         return (await this.api.get('/')).data;
     }
 
+    async getAllAdmins() {
+        return (await this.api.get('/admin/')).data;
+    }
+
     async findOneUser(id) {
         return (await this.api.get(`/${id}`)).data;
     }

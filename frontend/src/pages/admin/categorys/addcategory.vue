@@ -8,7 +8,7 @@
             <div class=" col-lg-6 col-md-6 col-sm-6">
                 <form enctype="multipart/form-data" @submit="addCategory">
                     <div class="mb-3">
-                        <label class="form-label">Danh mục: </label>
+                        <label class="form-label title">Danh mục: </label>
                         <div class="name-category-input">
                             <input @click="Removerror" type="text" class="form-control" v-model="categoryname"
                                 placeholder="Nhập tên danh mục mới">
@@ -78,27 +78,13 @@ export default {
                     const response = await CategoryService.createCategory(formData);
                     console.log("response", response);
                     if (response.status === 200) {
-                        console.log("thanh cong");
-                        // alert("Tạo danh mục mới thành công");
-                        // this.$router.push('/admin/categorys');
                         this.fetchgetNameCategorys();
                         this.categoryname = '';
                     }
-                    // else if (response.status === 400) {
-                    //     // alert("Danh mục đã tồn tại");
-                    //     // this.$router.push('/admin/addcategory');
-                    //     this.Error = response.data.message;
-                    //     this.showError = true;
-                    //     this.categoryname = '';
-                    // }
 
-                    // else {
-                    //     console.log("Error",)
-                    // }
                 } catch (error) {
                     if (error.response.status === 400) {
-                        // alert("Danh mục đã tồn tại");
-                        // this.$router.push('/admin/addcategory');
+
                         this.Error = error.response.data.message;
                         this.showError = true;
                         this.categoryname = '';
@@ -169,7 +155,8 @@ h6 {
     margin-bottom: 30px;
 }
 
-h3 {
+h3,
+.title {
     font-weight: bold;
 }
 </style>

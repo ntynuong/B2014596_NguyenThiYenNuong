@@ -22,27 +22,33 @@
                                 </div>
                             </ul>
 
-                            <ul class="navbar-nav ml-auto d-flex">
-                                <LoginIcon></LoginIcon>
+                            <ul class="navbar-nav ml-auto d-flex text-center">
+                                <li>
+                                    <LoginIcon></LoginIcon>
+                                </li>
+                                <li>
 
-                                <div class="d-flex search">
-                                    <button v-if="storedValue" class="btn btn-outline position-relative" type="submit"
-                                        @click="goToCart">
-                                        <i class="bi bi-cart3"></i>
-                                        <span
-                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {{ totalQuantity }}
-                                        </span>
-                                    </button>
-                                    <button v-else class="btn btn-outline position-relative" type="submit"
-                                        @click="redirectToLogin">
-                                        <i class="bi bi-cart3"></i>
-                                        <span
-                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            0
-                                        </span>
-                                    </button>
-                                </div>
+
+                                    <div class="d-flex search">
+                                        <button v-if="storedValue" class="btn btn-outline position-relative" type="submit"
+                                            @click="goToCart">
+                                            <i class="bi bi-cart3"></i>
+                                            <span
+                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                {{ totalQuantity }}
+                                            </span>
+                                        </button>
+                                        <button v-else class="btn btn-outline position-relative" type="submit"
+                                            @click="redirectToLogin">
+                                            <i class="bi bi-cart3"></i>
+                                            <span
+                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                0
+                                            </span>
+                                        </button>
+                                    </div>
+
+                                </li>
 
                             </ul>
 
@@ -123,10 +129,10 @@
 <script>
 import LoginIcon from '@/components/LoginIcon.vue';
 import CategoryService from '@/services/category.service';
-import { useAuthStore } from '../stores/auth';
 import { useCartStore } from '../stores/cart';
 import { ref, watch, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import CartService from '@/services/cart.service';
 
 export default {
     name: 'HeaderHome',
@@ -141,9 +147,7 @@ export default {
 
         const searchProduct = ref(''); // Biến reactive để lưu trữ giá trị nhập liệu tìm kiếm
 
-        // const isLoggedIn = computed(() => {
-        //     return useAuthStore().isLoggedIn;
-        // });
+
 
         const userId = localStorage.getItem('userId');
         const storedValue = ref(localStorage.getItem('isLoggedIn') === 'true');
@@ -164,14 +168,30 @@ export default {
             }
         };
 
-        const cartStore = useCartStore();
-        const getTotalQuantity = computed(() => {
-            return cartStore.getTotalQuantity;
+        const getCart = async () => {
+            try {
+
+                const userId = localStorage.getItem('userId');
+                const response = await CartService.getCart(userId); // Thay đổi đường dẫn API tùy thuộc vào cấu trúc của ứng dụng của bạn
+                cartItems.value = response;
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        // Tạo một watcher để theo dõi sự thay đổi của cartItems.value
+        watch(cartItems, (newCartItems) => {
+            totalQuantity.value = newCartItems.reduce((total, product) => {
+                return total + parseInt(product.quantity);
+            }, 0);
         });
 
-        watch(getTotalQuantity, (newTotalQuantity) => {
-            totalQuantity.value = newTotalQuantity;
-        });
+        // Lưu totalQuantity vào local storage
+        localStorage.setItem('totalQuantity', totalQuantity.value.toString());
+
+
 
         onMounted(() => {
             // Lấy trạng thái đăng nhập từ local storage khi component được mounted
@@ -179,6 +199,10 @@ export default {
 
 
             fetchgetNameCategorys();
+
+            getCart();
+
+
 
 
 
@@ -207,7 +231,6 @@ export default {
 
         return {
             totalQuantity,
-            // isLoggedIn,
             goToCart,
             redirectToLogin,
 
@@ -238,12 +261,5 @@ export default {
 
 .hotline {
     margin-right: 5px;
-}
-
-.icon-search {
-    /* background-color: white; */
-    /* color: #04AA6D; */
-
-    /* border: 1px solid white; */
 }
 </style>

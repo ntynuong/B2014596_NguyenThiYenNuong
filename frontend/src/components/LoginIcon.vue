@@ -1,7 +1,6 @@
 <template>
     <div>
 
-        <!-- <div class="dropdown" v-if="!isLoggedIn"> -->
         <div class="dropdown" v-if="!storedValue">
             <div class="d-flex align-items-center">
                 <div class="d-flex mr-2 d-none d-lg-block login-right">
@@ -42,7 +41,6 @@
 
 import { defineComponent, onMounted, watch, ref } from 'vue';
 
-import { useAuthStore } from '../stores/auth';
 
 import { useRouter } from 'vue-router';
 
@@ -50,10 +48,8 @@ import { useRouter } from 'vue-router';
 export default defineComponent({
     setup() {
         const router = useRouter();
-        const authStore = useAuthStore();
 
 
-        // const isLoggedIn = ref(false); // Tạo một reactive object sử dụng ref
 
         const userId = localStorage.getItem('userId');
         console.log("id", userId);
@@ -63,11 +59,7 @@ export default defineComponent({
 
 
         const logout = () => {
-            // authStore.logout();
-            // localStorage.removeItem('isLoggedIn'); // Xóa trạng thái đăng nhập từ local storage
-            // localStorage.removeItem('userId'); // Xóa người dùng từ local storage
             router.push('/login'); // Điều hướng tới trang đăng nhập sau khi đăng xuất
-            // localStorage.setItem('isLoggedIn', 'false'); // Xóa trạng thái đăng nhập từ local storage
             localStorage.removeItem('isLoggedIn'); // Xóa trạng thái đăng nhập từ local storage
             localStorage.removeItem('userId'); // Xóa người dùng từ local storage
             localStorage.removeItem('role'); // Xóa vai trò từ local storage
@@ -77,62 +69,18 @@ export default defineComponent({
 
         // Lấy trạng thái đăng nhập từ local storage khi component được mounted
         onMounted(() => {
-            // const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             storedValue.value = localStorage.getItem('isLoggedIn') === 'true';
 
-            // isLoggedIn.value = storedValue; // Gán giá trị từ Local Storage vào reactive object
-            // if (!isLoggedIn) {
-            //     localStorage.removeItem('isLoggedIn'); // Xóa trạng thái đăng nhập từ local storage nếu không tồn tại
-            // }
-
-            // authStore.setLoggedIn(isLoggedIn);
         });
 
-        // Watch isLoggedIn để theo dõi thay đổi và cập nhật local storage
-        // watch(
-        //     // () => authStore.isLoggedIn,
-        //     (newValue) => {
-        //         localStorage.setItem('isLoggedIn', newValue.toString());
-        //         localStorage.setItem('userId', newValue.toString());
-        //     }
-        // );
-
         return {
-            // isLoggedIn: authStore.isLoggedIn,
             logout,
             userId,
             username,
-            // isLoggedIn,
             storedValue
-            // userId: authStore.userId
         }
 
-        // const router = useRouter();
 
-        // const authStore = useAuthStore();
-
-        // const logout = () => {
-        //     authStore.logout();
-        //     router.push('/login'); // Điều hướng tới trang đăng nhập sau khi đăng xuất
-        // };
-
-
-        // // Sử dụng onMounted để đảm bảo rằng component đã được mounted trước khi theo dõi sự thay đổi của isLoggedIn
-        // onMounted(() => {
-        //     // Sử dụng watch để theo dõi thay đổi của isLoggedIn
-        //     watch(
-        //         () => authStore.isLoggedIn,
-        //         (newValue) => {
-        //             console.log('isLoggedIn changed:', newValue);
-        //         }
-        //     );
-        // });
-
-        // return {
-        //     isLoggedIn: authStore.isLoggedIn,
-        //     logout,
-        //     userId: authStore.userId
-        // };
     }
 });
 

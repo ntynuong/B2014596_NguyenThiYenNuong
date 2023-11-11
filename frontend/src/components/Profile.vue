@@ -1,39 +1,53 @@
 <template>
-    <div class="card mb-3 text-center container" style="max-width: 540px;">
-        <div class="row g-0">
+    <div class=" mb-3 text-center container" style="max-width: 540px;">
+        <div class="row g-0 profile card">
             <h3>Hồ sơ cá nhân</h3>
+            <div class="row justity-content-center ">
+                <div><img src="/img/user.png" class="img-fluid rounded-start user " alt="..."></div>
 
-            <div class="col-md-4">
-                <img src="/img/user.png" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <form class=" " @submit="updateUser($event, userId)">
-                        <div class="input-container">
-                            <lable>Tên: </lable>
-                            <input type="text" v-model="fullname" class="input-field" name="fullname"
-                                placeholder="Họ và tên">
+
+            <div class="row justity-content-center">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="">
+                        <div class="card-body">
+                            <form class=" " @submit="updateUser($event, userId)">
+                                <div class="mb-3">
+                                    <label class="form-label title-product">Tên: </label>
+                                    <div class="quantity-product-input">
+                                        <input type="text" class="form-control" v-model="fullname">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label title-product">Email: </label>
+                                    <div class="quantity-product-input">
+                                        <input type="text" class="form-control" v-model="email">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label title-product">Số điện thoại: </label>
+                                    <div class="quantity-product-input">
+                                        <input type="text" class="form-control" v-model="phone">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label title-product">Địa chỉ: </label>
+                                    <div class="quantity-product-input">
+                                        <input type="text" class="form-control" v-model="address">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn mb-3">CẬP NHẬT</button>
+
+                            </form>
                         </div>
-
-                        <div class="input-container">
-                            <lable>Email: </lable>
-                            <input type="email" v-model="email" class="input-field" name="email" placeholder="Email">
-                        </div>
-
-                        <div class="input-container">
-                            <lable>Số điện thoại: </lable>
-                            <input type="text" v-model="phone" class="input-field" name="phone" placeholder="Số điện thoại">
-                        </div>
-
-                        <div class="input-container">
-                            <lable>Địa chỉ: </lable>
-                            <input type="text" v-model="address" class="input-field" name="address" placeholder="Địa chỉ">
-                        </div>
-
-                        <button type="submit" class="">CẬP NHẬT</button>
-
-                    </form>
+                    </div>
                 </div>
+                <div class="col-lg-2"></div>
             </div>
         </div>
     </div>
@@ -123,29 +137,24 @@ export default {
 </script>
 
 <style scoped>
-.image-user {
-    width: 175px;
-    height: 175px;
-}
-
-.input-field {
-    padding: 10px;
-    outline: none;
-    margin-left: 15px;
-}
-
-.input-container {
-    position: relative;
-    display: inline-block;
-    display: flex;
-    margin-bottom: 15px;
-    align-items: center;
-    /* Căn các phần tử theo chiều dọc */
+.user {
+    width: 200px;
+    height: 200px;
 
 }
 
-.input-container label {
-    margin-right: 10px;
-    /* Khoảng cách giữa nhãn và input */
+.profile {
+    margin: 30px 0;
+}
+
+h3,
+.title-product {
+    font-weight: bold;
+}
+
+.btn {
+    color: rgb(20, 20, 255);
+    font-weight: bold;
+    background-color: rgb(179, 205, 255);
 }
 </style>

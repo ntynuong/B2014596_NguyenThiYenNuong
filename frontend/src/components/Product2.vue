@@ -1,6 +1,17 @@
 <template>
     <div class="grid wide container">
-        <div class="row">
+        <div class="row sort justify-content-end">
+            <div class="custom-select " style="width:400px; heigh: 200px;">
+                <select @change="handleSort">
+                    <option value="0">Sắp xếp:</option>
+                    <option value="1">Lọc theo tên a-z</option>
+                    <option value="2">Lọc theo giá thấp-cao</option>
+                    <option value="3">Lọc theo giá cao-thấp</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row product">
             <div class="col-lg-2 d-none d-lg-block ">
 
                 <div class="ietm1">
@@ -55,7 +66,6 @@ import CategoryService from '@/services/category.service';
 import CartService from '@/services/cart.service';
 import ProductService from '@/services/product.service';
 import { useAuthStore } from '../stores/auth';
-// import { useCartStore } from '../stores/cart';
 
 export default {
     name: 'Product2',
@@ -83,15 +93,15 @@ export default {
         this.getAllProduct();
     },
 
-    computed: {
-        isLoggedIn() {
-            return useAuthStore().isLoggedIn;
-        },
+    // computed: {
+    //     isLoggedIn() {
+    //         return useAuthStore().isLoggedIn;
+    //     },
 
-        userId() {
-            return useAuthStore().userId;
-        },
-    },
+    //     userId() {
+    //         return useAuthStore().userId;
+    //     },
+    // },
 
     methods: {
 
@@ -124,7 +134,6 @@ export default {
         },
 
         async addToCart(product) {
-            // const authStore = useAuthStore();
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             const userId = localStorage.getItem('userId');
             if (isLoggedIn) {
@@ -169,7 +178,43 @@ export default {
             }
 
 
-        }
+        },
+
+        handleSort(event) {
+            const value = parseInt(event.target.value);
+            if (value === 1) {
+                this.sortByName();
+            } else if (value === 2) {
+                this.sortByPriceLow();
+            } else if (value === 3) {
+                this.sortByPriceHigh();
+            }
+        },
+
+        // sap xep
+        sortByPriceLow() {
+            this.products.sort((a, b) => {
+                const priceA = parseInt(a.price.replace(/\s/g, ''));
+                const priceB = parseInt(b.price.replace(/\s/g, ''));
+                return priceA - priceB;
+            });
+        },
+
+        sortByPriceHigh() {
+            this.products.sort((a, b) => {
+                const priceA = parseInt(a.price.replace(/\s/g, ''));
+                const priceB = parseInt(b.price.replace(/\s/g, ''));
+                return priceB - priceA;
+            });
+        },
+
+        sortByName() {
+            this.products.sort((a, b) => {
+                const nameA = a.productname.toLowerCase();
+                const nameB = b.productname.toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+        },
 
     },
 
@@ -201,8 +246,8 @@ export default {
     margin: 0;
     padding: 0;
     width: 160px;
-    /* background-color: #e9d8f4; */
-    background-color: #f3eaea;
+    background-color: #eff1f0;
+    /* background-color: #f3eaea; */
 }
 
 li p {
@@ -214,13 +259,23 @@ li p {
 
 /* Thay đổi màu liên kết khi di chuột qua */
 li p:hover {
-    background-color: #db7093;
+    /* background-color: #db7093; */
     font-weight: bold;
-    color: white;
+    color: #04AA6D;
+}
+
+li p::after {
+    content: '';
+    width: 0;
+    height: 3px;
+    background-color: #04AA6D;
+    color: #04AA6D;
+    margin: auto;
+    display: block;
 }
 
 .active-category {
-    background-color: #58257b;
+    background-color: #04AA6D;
     color: white;
 }
 
@@ -275,5 +330,14 @@ li p:hover {
 
 .card-price {
     color: red;
+}
+
+.product {
+    margin: 50px 0;
+}
+
+.sort {
+    text-align: right;
+    margin-top: 30px;
 }
 </style>

@@ -10,9 +10,7 @@
                             <ul>
                                 <h5 class="title-footer">DREAM HOUSE</h5>
 
-                                <!-- <li>
-                                    <i class="bi bi-facebook"></i>
-                                </li> -->
+
                                 <li>
                                     <p class="text-footer"><span><i class="bi bi-geo-alt-fill"></i> Hưng Lợi, Ninh Kiều,
                                             Cần Thơ</span>
