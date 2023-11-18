@@ -38,6 +38,15 @@
                                                 {{ totalQuantity }}
                                             </span>
                                         </button>
+
+                                        <!-- <button v-if="storedValue" class="btn btn-outline position-relative" type="submit"
+                                            @click="goToCart">
+                                            <i class="bi bi-cart3"></i>
+                                            <span
+                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                {{ total }}
+                                            </span>
+                                        </button> -->
                                         <button v-else class="btn btn-outline position-relative" type="submit"
                                             @click="redirectToLogin">
                                             <i class="bi bi-cart3"></i>
@@ -139,6 +148,13 @@ export default {
     components: { LoginIcon },
 
     setup() {
+        // const store = useCartStore();
+
+        // const total = computed(() => {
+        //     return store.getTotalQuantity;
+        // });
+
+
         const totalQuantity = ref(0);
         const cartItems = ref([]);
         const category = '';

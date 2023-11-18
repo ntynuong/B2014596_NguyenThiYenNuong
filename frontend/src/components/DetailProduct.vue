@@ -52,32 +52,19 @@
                                 </p>
 
                                 <div class="icon-hover d-flex">
-                                    <div class="icon-eye" @click="viewProduct">
-                                        <router-link :to="{ name: 'DetailProduct', params: { id: item._id } }"
-                                            class="nav-link">
-                                            <i class="bi bi-eye"></i>
-                                        </router-link>
-
-
+                                    <div class="icon-eye" @click="viewProduct(item._id)">
+                                        <i class="bi bi-eye"></i>
                                     </div>
+
+
                                     <div class="icon-cart" @click="addToCart(item)">
                                         <i class="bi bi-cart"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
                     </div>
-
-
-
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -103,7 +90,8 @@ export default {
     },
 
     mounted() {
-        this.fetchfindOneProduct();
+        const productQuery = this.$route.params.id;
+        this.fetchfindOneProduct(productQuery);
     },
 
     computed: {
@@ -120,12 +108,15 @@ export default {
     },
 
     methods: {
+        viewProduct(productId) {
+            this.$router.push({ name: 'DetailProduct', params: { id: productId } });
+            this.fetchfindOneProduct(productId);
+        },
 
-        async fetchfindOneProduct() {
+        async fetchfindOneProduct(productQuery) {
             try {
-                const productId = this.$route.params.id;
 
-                this.product = await ProductService.findOneProduct(productId);
+                this.product = await ProductService.findOneProduct(productQuery);
 
                 this.Price = this.product.price.replace(/\s/g, '.');
 
@@ -167,7 +158,6 @@ export default {
 
                 if (this.quantity <= stockQuantity) {
                     try {
-                        // const quantity = this.quantity;
                         const data = {
                             userId: userId,
                             productId: item._id,
@@ -232,7 +222,7 @@ export default {
                         const response = await CartService.addToCart(data);
                         if (response.status === 200) {
                             alert("Thêm sản phẩm vào giỏ hàng thành công");
-
+                            this.quantity = 1; // Đặt lại giá trị quantity thành 1
 
 
 
@@ -272,21 +262,14 @@ export default {
 .item-image {
     width: 250px;
     height: 250px;
-    /* text-align: center; */
 }
 
 
 .card-product {
-    /* text-align: center; */
-    /* border-radius: 16px; */
     overflow: hidden;
     position: relative;
     margin: 30px 0;
 }
-
-/* .card-product img {
-    text-align: center;
-} */
 
 .icon-hover {
     transition: .5s ease;
@@ -304,7 +287,6 @@ export default {
     background-color: #ff0000;
     color: white;
     font-size: 16px;
-    /* padding: 16px 32px; */
     padding: 4px 15px;
     margin-left: 5px;
     border-radius: 50%;

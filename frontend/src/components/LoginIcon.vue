@@ -17,7 +17,8 @@
             <button class="btn btn-outline border-none outline-none " type="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <img src="/img/user.png" alt="Avatar" class="avatar">
-                <p><i class="bi bi-person"></i>: {{ username }}</p>
+                <!-- <p><i class="bi bi-person"></i>: {{ username }}</p> -->
+                <p>{{ username }}</p>
             </button>
 
 

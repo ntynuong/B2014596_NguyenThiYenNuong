@@ -33,11 +33,13 @@
                                 class="product-image"></td>
                         <td>{{ item.productname }}</td>
                         <td>{{ parseInt(item.price.replace(/\s/g, '')).toLocaleString('vi-VN') }}&#8363;</td>
+                        <p class=" button-quantity" @click="decreaseQuantity(item)">{{ item.Quantity }}</p>
                         <td>
 
                             <div class="d-flex text-center">
 
                                 <button class=" button-quantity" @click="decreaseQuantity(item)">-</button>
+
                                 <button class=" button-quantity-number"> {{ item.quantity }}</button>
                                 <button class=" button-quantity" @click="increaseQuantity(item)">+</button>
                             </div>
@@ -77,6 +79,7 @@
 <script>
 import { useCartStore } from '../stores/cart';
 import CartService from '@/services/cart.service';
+import ProductService from '@/services/product.service';
 
 export default {
     name: 'Cart',
@@ -126,10 +129,28 @@ export default {
         async increaseQuantity(item) {
             // Tăng giá trị quantity của item lên 1
             item.quantity++;
+
+            const stockQuantity = parseInt(item.Quantity);
+            const updatedQuantity = stockQuantity - 1;
+            console.log("kho", item.Quantity);
+            console.log("khomoi", updatedQuantity);
+
             const userId = localStorage.getItem('userId');
             const response = await CartService.updateCart(userId, item.productId, item.quantity);
             if (response.status === 200) {
                 alert("Cập nhật thành công");
+
+
+                const dataquantity = {
+                    Quantity: updatedQuantity,
+                }
+
+                // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
+                const result = await ProductService.updateProduct(item._id, dataquantity);
+                if (result.status === 200) {
+                    console.log("Đã cập nhật số lượng trong kho");
+                }
+
                 this.getCart();
             }
 

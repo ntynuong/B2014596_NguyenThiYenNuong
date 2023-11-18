@@ -72,7 +72,7 @@
 
         <div class="card">
             <img src="/img/noorder.png" class="card-img-top image-noorder mx-auto" alt="...">
-            <div class="card-body">
+            <div class="card-body text-center">
                 <p>Bạn chưa có đơn hàng nào!</p>
                 <router-link to="/product2"><button class="btn btn-danger">Tiếp tục mua hàng</button></router-link>
             </div>

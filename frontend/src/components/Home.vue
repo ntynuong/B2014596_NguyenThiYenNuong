@@ -25,7 +25,7 @@
 
     </div>
 
-    <div class="container">
+    <!-- <div class="container">
         <h3 class="text-center title-category"><span class="title">DANH MỤC </span>SẢN PHẨM</h3>
         <div class="row  ">
             <div class="col-lg-2 col-md-2 col-sm-2 image-category">
@@ -53,7 +53,7 @@
                 <div class="centered ">TỦ</div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
     <div class="container">
@@ -112,6 +112,40 @@
                     <div class="card-content">
                     </div>
                 </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-3" v-for="item in items" :key="item.id">
+                <div class="card">
+                    <img :src="`http://localhost:3000/images/${item.images}`" :alt="productname"
+                        class="product-image text-center new-product">
+                    <div class="card-body">
+                        <h5 class="card-title">Ghế</h5>
+                        <p class="card-text">18.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row mt-3">
+
+            <div class="col">
+                <img src="/img/sofa-home.png" class="card-img-top" alt="..." style="width: 480px; height: 400px;">
+            </div>
+
+            <div class="col sofa-content">
+                <h3>Ghế sofa</h3>
+                <p> Một món đồ nội thất quen thuộc, đã trở nên không thể thiếu trong mỗi ngôi nhà. Từ việc thư giãn
+                    sau
+                    một ngày làm việc căn thẳng đến việc tiếp đón khách đến chơi, sofa đóng vai trò quan trọng trong cuộc
+                    sống
+                    hàng ngày của chúng ta. Còn chần chừ gì nữa hãy sắm một cái sofa cho gia đình ngay nào</p>
+                <router-link to="/Product2"><button class="btn-sofa">Xem chi tiết</button></router-link>
             </div>
         </div>
     </div>
@@ -430,5 +464,25 @@ h3 {
 .list {
     text-align: end;
 
+}
+
+.new-product {
+    width: 250px;
+    height: 250px;
+}
+
+.sofa-content {
+    padding: 30px;
+}
+
+.btn-sofa {
+    background-color: #04AA6D;
+    color: white;
+
+
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
 }
 </style>

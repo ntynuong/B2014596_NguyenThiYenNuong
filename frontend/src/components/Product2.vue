@@ -93,15 +93,7 @@ export default {
         this.getAllProduct();
     },
 
-    // computed: {
-    //     isLoggedIn() {
-    //         return useAuthStore().isLoggedIn;
-    //     },
 
-    //     userId() {
-    //         return useAuthStore().userId;
-    //     },
-    // },
 
     methods: {
 

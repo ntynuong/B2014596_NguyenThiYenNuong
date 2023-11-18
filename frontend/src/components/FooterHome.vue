@@ -37,6 +37,9 @@
                                     <router-link :to="{ name: 'Home' }" class="nav-link" @click="scrollToTop">
                                         <p class="text-footer ">TRANG CHỦ</p>
                                     </router-link>
+                                    <!-- <router-link to="/" class="nav-link">
+                                        <p class="text-footer ">TRANG CHỦ</p>
+                                    </router-link> -->
 
                                 </li>
                                 <li>

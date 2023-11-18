@@ -56,18 +56,18 @@ export const useCartStore = defineStore('cart', {
             this.totalQuantity = value;
         },
 
-        addSelectedItem(item) {
-            this.selectedItems.push(item);
-        },
-        removeSelectedItem(item) {
-            const index = this.selectedItems.indexOf(item);
-            if (index !== -1) {
-                this.selectedItems.splice(index, 1);
-            }
-        },
-        clearSelectedItems() {
-            this.selectedItems = [];
-        },
+        // addSelectedItem(item) {
+        //     this.selectedItems.push(item);
+        // },
+        // removeSelectedItem(item) {
+        //     const index = this.selectedItems.indexOf(item);
+        //     if (index !== -1) {
+        //         this.selectedItems.splice(index, 1);
+        //     }
+        // },
+        // clearSelectedItems() {
+        //     this.selectedItems = [];
+        // },
 
     },
 
@@ -82,9 +82,11 @@ export const useCartStore = defineStore('cart', {
         //     return state.cartItems.length;
         // },
 
-        getTotalQuantity(state) {
-            return state.totalQuantity;
-        }
+        // getTotalQuantity(state) {
+        //     return state.totalQuantity;
+        // }
+
+        getTotalQuantity: (state) => state.totalQuantity,
 
     },
 
