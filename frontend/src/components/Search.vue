@@ -7,7 +7,7 @@
                 <div class="row  search-result">
                     <div class="card col-lg-3 col-md-6 col-sm-12" v-for="result in searchResults" :key="result.id">
 
-                        <img :key="image" :src="`http://localhost:3000/images/${result.images}`" :alt="result.productname"
+                        <img :src="`http://localhost:3000/images/${result.images}`" :alt="result.productname"
                             class="product-image">
                         <div class="product card-body text-center">
                             <p class="card-name">{{ result.productname }}</p>

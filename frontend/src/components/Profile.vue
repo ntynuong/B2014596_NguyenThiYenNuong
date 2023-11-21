@@ -55,6 +55,7 @@
 
 <script>
 import UserService from '@/services/user.service';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'Profile',
@@ -98,7 +99,12 @@ export default {
                     const response = await UserService.updateUser(userId, formData);
                     if (response.status === 200) {
                         console.log("response", response);
-                        alert("Cập nhật thành công");
+                        // alert("Cập nhật thành công");
+                        Swal.fire(
+                            "",
+                            "Cập nhật thông tin thành công!",
+                            "success"
+                        );
                         // this.$router.push('/profile');
                     } else {
                         console.log("response", response);

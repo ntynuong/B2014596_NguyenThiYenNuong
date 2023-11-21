@@ -44,6 +44,7 @@
 
 <script>
 import CategoryService from '@/services/category.service';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'addCategory',
@@ -78,6 +79,11 @@ export default {
                     const response = await CategoryService.createCategory(formData);
                     console.log("response", response);
                     if (response.status === 200) {
+                        Swal.fire(
+                            "",
+                            "Thêm danh mục mới thành công!",
+                            "success"
+                        );
                         this.fetchgetNameCategorys();
                         this.categoryname = '';
                     }

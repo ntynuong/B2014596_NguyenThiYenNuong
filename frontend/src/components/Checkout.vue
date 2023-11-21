@@ -31,7 +31,6 @@
             <div class="col-70">
                 <div class="container">
                     <h4>Đơn hàng <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i>
-                            <!-- <b>{{ cartItems.length }}</b> -->
                         </span>
                     </h4>
                     <hr>
@@ -48,8 +47,8 @@
 
                         <div class="row" v-for="(item, index) in cartItems" :key="item.id">
                             <div class="col-lg-3">
-                                <img :key="image" :src="`http://localhost:3000/images/${item.images}`"
-                                    :alt="item.productname" class="product-image-checkout">
+                                <img :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
+                                    class="product-image-checkout">
 
                                 <p>{{ item.productname }}</p>
                             </div>
@@ -119,6 +118,7 @@ import UserService from '@/services/user.service';
 import CartService from '@/services/cart.service';
 import OrderService from '@/services/order.service';
 import moment from "moment";
+import Swal from 'sweetalert2';
 
 export default {
     name: 'Checkout',
@@ -229,8 +229,7 @@ export default {
 
         const createOrder = async () => {
             try {
-                // const totalPrice = totalPrice.value;
-                console.log("totalprice", grandTotalPrice.value);
+                // console.log("totalprice", grandTotalPrice.value);
 
                 const dateDH = moment().format("HH:mm:ss DD-MM-YYYY");
 
@@ -267,20 +266,26 @@ export default {
                     ordercartItems: ordercartItems,
                 };
 
-                console.log("data", data);
+                // console.log("data", data);
 
                 const response = await OrderService.createOrder(data);
 
                 if (response.status === 200) {
-                    alert("Đặt hàng thành công");
+                    // alert("Đặt hàng thành công");
+                    Swal.fire(
+                        "",
+                        "Đặt hàng thành công!",
+                        "success"
+                    );
 
-                    console.log("id", userId.value);
+                    // console.log("id", userId.value);
                     deleteAllCart(userId.value);
 
                     router.push({ name: 'Orders', params: { id: userId.value } });
-                } else {
-                    alert("That bai");
                 }
+                // else {
+                //     alert("That bai");
+                // }
             } catch (error) {
                 console.error(error);
             }

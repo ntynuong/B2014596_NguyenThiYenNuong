@@ -142,6 +142,7 @@ import { useCartStore } from '../stores/cart';
 import { ref, watch, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import CartService from '@/services/cart.service';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'HeaderHome',
@@ -230,7 +231,13 @@ export default {
             event.preventDefault(); // Ngăn chặn gửi form mặc định
 
             if (searchProduct.value === '') {
-                alert("Vui lòng nhập sản phẩm cần tìm kiếm");
+                // alert("Vui lòng nhập sản phẩm cần tìm kiếm");
+
+                Swal.fire(
+                    "",
+                    "Vui lòng nhập sản phẩm cần tìm kiếm!",
+                    "warning"
+                );
             } else {
                 const query = { search: searchProduct.value }; // Hàm thực hiện tìm kiếm
 

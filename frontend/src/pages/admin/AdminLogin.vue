@@ -41,6 +41,7 @@
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 
 export default {
@@ -93,7 +94,12 @@ export default {
                     })
                     .then(response => {
                         if (response.data.status === 200) {
-                            alert("Đăng nhập thành công!");
+                            // alert("Đăng nhập thành công!");
+                            Swal.fire(
+                                "",
+                                "Đăng nhập thành công!",
+                                "success"
+                            );
 
                             const adminId = response.data.payload.id;
                             const role = response.data.payload.role;

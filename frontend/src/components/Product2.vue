@@ -2,7 +2,7 @@
     <div class="grid wide container">
         <div class="row sort justify-content-end">
             <div class="custom-select " style="width:400px; heigh: 200px;">
-                <select @change="handleSort">
+                <select @change="handleSort" class="select">
                     <option value="0">Sắp xếp:</option>
                     <option value="1">Lọc theo tên a-z</option>
                     <option value="2">Lọc theo giá thấp-cao</option>
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="card col-lg-3 col-md-6 col-sm-12" v-for="product in products" :key="product._id">
 
-                        <img :key="image" :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
+                        <img :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
                             class="product-image">
                         <div class="product card-body text-center">
                             <p class="card-name">{{ product.productname }}</p>
@@ -51,6 +51,7 @@
                                 <div class="icon-cart" @click="addToCart(product)">
                                     <i class="bi bi-cart"></i>
                                 </div>
+
                             </div>
 
                         </div>
@@ -66,6 +67,7 @@ import CategoryService from '@/services/category.service';
 import CartService from '@/services/cart.service';
 import ProductService from '@/services/product.service';
 import { useAuthStore } from '../stores/auth';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'Product2',
@@ -75,15 +77,10 @@ export default {
             categorys: [],
             products: [],
             isLoggedIn: false,
-            quantity: 1
-        }
-    },
+            quantity: 1,
 
-    props: {
-        product: {
-            type: Object,
-            required: true,
-        },
+
+        }
     },
 
     mounted() {
@@ -130,7 +127,6 @@ export default {
             const userId = localStorage.getItem('userId');
             if (isLoggedIn) {
                 const stockQuantity = product.Quantity;
-
                 const updatedQuantity = stockQuantity - this.quantity;
 
 
@@ -141,28 +137,42 @@ export default {
                             productId: product._id,
                             quantity: this.quantity
                         };
-                        console.log("data", data);
+                        // console.log("data", data);
                         const response = await CartService.addToCart(data);
                         if (response.status === 200) {
-                            alert("Thêm sản phẩm vào giỏ hàng thành công");
+                            // alert("Thêm sản phẩm vào giỏ hàng thành công");
 
+
+
+                            Swal.fire(
+                                "",
+                                "Thêm sản phẩm vào giỏ hàng thành công!",
+                                "success"
+                            );
 
 
                             const dataquantity = {
                                 Quantity: updatedQuantity,
                             }
-
                             // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
                             const result = await ProductService.updateProduct(product._id, dataquantity);
                             if (result.status === 200) {
                                 console.log("Đã cập nhật số lượng trong kho");
+                                //load lại CSDL
+                                await this.getAllProduct();
                             }
                         }
                     } catch (error) {
                         console.error('Lỗi:', error);
                     }
                 } else {
-                    alert("Số lượng bạn mua vượt quá số lượng có trong kho");
+                    // alert("Số lượng bạn mua vượt quá số lượng có trong kho");
+
+                    Swal.fire(
+                        "",
+                        "Số lượng bạn mua vượt quá số lượng có trong kho. <br> Vui lòng chọn lại!",
+                        "warning"
+                    );
                 }
 
             } else {
@@ -331,5 +341,10 @@ li p::after {
 .sort {
     text-align: right;
     margin-top: 30px;
+}
+
+.ul li,
+.select {
+    cursor: pointer;
 }
 </style>

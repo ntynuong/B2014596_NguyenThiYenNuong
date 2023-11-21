@@ -74,8 +74,7 @@
                                                                 :key="product.productId">
                                                                 <td>{{ index + 1 }}</td>
                                                                 <td>
-                                                                    <img :key="image"
-                                                                        :src="`http://localhost:3000/images/${product.images}`"
+                                                                    <img :src="`http://localhost:3000/images/${product.images}`"
                                                                         :alt="product.productname" class="product-image">
                                                                 </td>
                                                                 <td>{{ product.productname }}</td>
@@ -105,7 +104,8 @@
                                 </div>
                             </div>
                         </td>
-                        <td><button class="btn update" @click="updateOrder(item.order._id)">Xử lí</button></td>
+                        <td v-if="!item.order.dateGH && !item.order.adminId"><button class="btn update"
+                                @click="updateOrder(item.order._id)">Xử lí</button></td>
 
                     </tr>
                 </tbody>
@@ -117,6 +117,7 @@
 <script>
 import OrderService from '@/services/order.service';
 import moment from "moment";
+import Swal from 'sweetalert2';
 
 export default {
     name: 'OrdersAdmin',
@@ -161,7 +162,13 @@ export default {
             const response = await OrderService.updateOrder(orderId, data);
 
             if (response.status === 200) {
-                alert('Cập nhật đơn hàng thành công');
+                // alert('Cập nhật đơn hàng thành công');
+                Swal.fire(
+                    "",
+                    "Xử lý đơn hàng thành công!",
+                    "success"
+                );
+
                 this.getOrders();
             }
         }

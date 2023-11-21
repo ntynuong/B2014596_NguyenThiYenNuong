@@ -51,6 +51,7 @@
 
 
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
 
@@ -134,7 +135,13 @@ export default {
                     .then(response => {
 
                         if (response.status === 200) {
-                            alert('Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
+                            // alert('Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.');
+                            Swal.fire(
+                                "",
+                                "Đăng ký thành công!<br> Vui lòng đăng nhập để tiếp tục.",
+                                "success"
+                            );
+
                             this.$router.push('/login');
                         }
 

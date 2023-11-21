@@ -25,48 +25,26 @@
 
     </div>
 
-    <!-- <div class="container">
-        <h3 class="text-center title-category"><span class="title">DANH MỤC </span>SẢN PHẨM</h3>
-        <div class="row  ">
-            <div class="col-lg-2 col-md-2 col-sm-2 image-category">
-                <img src="/img/den-2.png" class="img-fuild  zoom" style="width: 250px; height: 250px">
-                <div class="centered ">ĐÈN</div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 image-category">
-                <img src="/img/sofa-danhmuc.png" class="img-fuild zoom" style="width: 250px; height: 250px">
-                <div class="centered ">SOFA</div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 image-category">
-                <img src="/img/ke-danhmuc.png" class="img-fuild zoom" style="width: 250px; height: 250px">
-                <div class="centered ">KỆ</div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 image-category">
-                <img src="/img/ghe-danhmuc.png" class="img-fuild zoom" style="width: 250px; height: 250px">
-                <div class="centered ">GHẾ</div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 image-category">
-                <img src="/img/ban-danhmuc-1.png" class="img-fuild zoom" style="width: 250px; height: 250px">
-                <div class="centered ">BÀN</div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 image-category">
-                <img src="/img/tu-danhmuc-1.png" class="img-fuild zoom" style="width: 250px; height: 250px">
-                <div class="centered ">TỦ</div>
-            </div>
-        </div>
-    </div> -->
-
 
     <div class="container">
         <h3 class="text-center title-category">SẢN PHẨM <span class="title">MỚI</span></h3>
         <div class="row">
             <div class="col-md-3" v-for="product in products" :key="product.id">
-                <div class="card card-noibat mt-3" @click="viewProduct(product)">
+                <!-- <div class="card card-noibat mt-3" @click="viewProduct(product)">
                     <div class="card-image card-img">
-                        <img :src="`http://localhost:3000/images/${product.images}`" :alt="productname"
-                            class="product-image text-center">
+                        <img :src="`http://localhost:3000/images/${product.images}`" class="product-image text-center">
                     </div>
                     <div class="card-content">
                     </div>
+                </div> -->
+
+
+                <div class="border mt-3" @click="viewProduct(product)">
+                    <div class="card-image card-img">
+                        <img :src="`http://localhost:3000/images/${product.images}`" class="product-image text-center">
+                    </div>
+                    <!-- <div class="card-content">
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -106,8 +84,7 @@
             <div class="col-md-3" v-for="item in items" :key="item.id">
                 <div class="card card-noibat mt-3" @click="viewProduct(item)">
                     <div class="card-image card-img">
-                        <img :src="`http://localhost:3000/images/${item.images}`" :alt="productname"
-                            class="product-image text-center">
+                        <img :src="`http://localhost:3000/images/${item.images}`" class="product-image text-center">
                     </div>
                     <div class="card-content">
                     </div>
@@ -116,18 +93,7 @@
         </div>
 
 
-        <div class="row">
-            <div class="col-md-3" v-for="item in items" :key="item.id">
-                <div class="card">
-                    <img :src="`http://localhost:3000/images/${item.images}`" :alt="productname"
-                        class="product-image text-center new-product">
-                    <div class="card-body">
-                        <h5 class="card-title">Ghế</h5>
-                        <p class="card-text">18.000</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 
 
@@ -145,7 +111,8 @@
                     một ngày làm việc căn thẳng đến việc tiếp đón khách đến chơi, sofa đóng vai trò quan trọng trong cuộc
                     sống
                     hàng ngày của chúng ta. Còn chần chừ gì nữa hãy sắm một cái sofa cho gia đình ngay nào</p>
-                <router-link to="/Product2"><button class="btn-sofa">Xem chi tiết</button></router-link>
+                <router-link to="/Product2" @click="scrollToTop"><button class="btn-sofa">Xem chi
+                        tiết</button></router-link>
             </div>
         </div>
     </div>
@@ -288,12 +255,12 @@ export default {
         viewProduct(product) {
             // Chuyển hướng đến trang chi tiết sản phẩm và truyền id của sản phẩm như một param
             this.$router.push({ name: 'DetailProduct', params: { id: product._id } });
+
+            this.scrollToTop();
         },
 
-        methods: {
-            scrollToTop() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+        scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
 
@@ -332,7 +299,6 @@ export default {
 
 .card:hover p {
     color: white;
-    /* color: #04AA6D; */
 }
 
 .card-body:hover p,
@@ -342,25 +308,11 @@ export default {
 }
 
 .card:hover {
-    /* background-color: #04AA6D; */
     color: white;
 }
 
 
-.zoom {
-    padding: 50px;
-    /* background-color: green; */
-    transition: transform .2s;
-    /* Animation */
-    width: 200px;
-    height: 200px;
-    margin: 0 auto;
-}
 
-.zoom:hover {
-    transform: scale(1.5);
-    /* (150% zoom)*/
-}
 
 
 .image-category {
@@ -389,7 +341,6 @@ export default {
 .card-noibat {
     width: 250px;
     height: 150px;
-    /* background-color: #7FFFD4; */
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -397,23 +348,12 @@ export default {
 }
 
 .card-img {
-    /* position: absolute; */
-    /* Đặt vị trí tuyệt đối cho hình ảnh */
-    top: -20px;
-    /* Điều chỉnh vị trí top để hình ảnh nổi ra bên ngoài */
-    left: -20px;
-    /* Điều chỉnh vị trí left để hình ảnh nổi ra bên ngoài */
-    z-index: 1;
-    /* Đặt chỉ số z để đảm bảo hình ảnh nổi lên trên card */
 
-
-    /* position: relative; */
-    height: 200px;
+    height: 150px;
     width: 150px;
 }
 
 .card-img img {
-    width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
@@ -425,8 +365,7 @@ export default {
 
 .card-content {
     padding: 20px;
-    /* z-index: 2; */
-    /* Đặt chỉ số z để đảm bảo nội dung nằm phía trên hình ảnh */
+
 }
 
 .card-title {

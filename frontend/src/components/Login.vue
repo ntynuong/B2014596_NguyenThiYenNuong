@@ -45,7 +45,7 @@ import { useAuthStore } from '../stores/auth';
 import axios from 'axios';
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-
+import Swal from 'sweetalert2';
 
 
 
@@ -103,7 +103,12 @@ export default {
                     .then(response => {
                         console.log("response", response);
                         if (response.status === 200) {
-                            alert("Đăng nhập thành công!");
+                            // alert("Đăng nhập thành công!");
+                            Swal.fire(
+                                "",
+                                "Đăng nhập thành công!",
+                                "success"
+                            );
 
                             console.log("response", response);
                             console.log("id", response.data.payload.id);
@@ -146,13 +151,6 @@ export default {
             }
         };
 
-        watch(
-            (newValue) => {
-                localStorage.setItem('isLoggedIn', newValue.toString());
-                localStorage.setItem('userId', newValue.toString());
-            }
-        );
-
         return {
             email,
             password,
@@ -162,7 +160,6 @@ export default {
             inputType,
             togglePasswordVisibility,
             submitForm,
-            // setUserId,
         };
     }
 };

@@ -77,6 +77,7 @@
 import axios from 'axios';
 import ProductService from '@/services/product.service';
 import CategoryService from '@/services/category.service';
+import Swal from 'sweetalert2';
 
 export default {
 
@@ -156,7 +157,13 @@ export default {
                     const response = await ProductService.updateProduct(productId, formData);
                     if (response.status === 200) {
                         console.log("response", response);
-                        alert("Cập nhật thành công");
+                        // alert("Cập nhật thành công");
+                        Swal.fire(
+                            "",
+                            "Cập nhật sản phẩm thành công!",
+                            "success"
+                        );
+
 
                         this.$router.push('/admin/products');
                     } else {

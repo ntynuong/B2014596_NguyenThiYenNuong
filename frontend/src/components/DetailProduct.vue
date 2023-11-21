@@ -5,8 +5,8 @@
             <h3>Chi tiết sản phẩm</h3>
             <div class="col-md-5 text-center">
                 <div class="card">
-                    <img :key="image" :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
-                        class="product-image">
+                    <img v-if="product.images" :src="`http://localhost:3000/images/${product.images}`"
+                        :alt="product.productname" class="product-image">
                 </div>
 
             </div>
@@ -44,7 +44,7 @@
                 <div class="carousel-item active">
                     <div class="row d-flex">
                         <div class="card col-sm-4" v-for="item in items" :key="item._id">
-                            <img :key="image" :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
+                            <img :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
                                 class="item-image mx-auto">
                             <div class="card-body text-center">
                                 <p class="card-name">{{ item.productname }}</p>
@@ -73,7 +73,7 @@
 <script>
 import ProductService from '@/services/product.service';
 import CartService from '@/services/cart.service';
-
+import Swal from 'sweetalert2';
 import { useAuthStore } from '../stores/auth';
 
 export default {
@@ -89,21 +89,20 @@ export default {
         };
     },
 
+
     mounted() {
         const productQuery = this.$route.params.id;
         this.fetchfindOneProduct(productQuery);
     },
 
     computed: {
-        isLoggedIn() {
-            return useAuthStore().isLoggedIn;
-        },
         userId() {
             return useAuthStore().userId;
         },
     },
 
     created() {
+
         this.quantity = 1; // Thiết lập giá trị mặc định ban đầu là 1 trong lifecycle hook created()
     },
 
@@ -153,7 +152,6 @@ export default {
             const userId = localStorage.getItem('userId');
             if (isLoggedIn) {
                 const stockQuantity = item.Quantity;
-
                 const updatedQuantity = stockQuantity - this.quantity;
 
                 if (this.quantity <= stockQuantity) {
@@ -166,18 +164,24 @@ export default {
                         console.log("data", data);
                         const response = await CartService.addToCart(data);
                         if (response.status === 200) {
-                            alert("Thêm sản phẩm vào giỏ hàng thành công");
+                            // alert("Thêm sản phẩm vào giỏ hàng thành công");
 
-
+                            Swal.fire(
+                                "",
+                                "Thêm sản phẩm vào giỏ hàng thành công!",
+                                "success"
+                            );
 
                             const dataquantity = {
                                 Quantity: updatedQuantity,
                             }
-
                             // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
                             const result = await ProductService.updateProduct(item._id, dataquantity);
                             if (result.status === 200) {
                                 console.log("Đã cập nhật số lượng trong kho");
+
+                                // Gọi lại phương thức fetchfindOneProduct() để làm mới giá trị trong kho
+                                await this.fetchfindOneProduct(item._id);
                             }
                         }
                     } catch (error) {
@@ -209,7 +213,6 @@ export default {
             const userId = localStorage.getItem('userId');
             if (isLoggedIn) {
                 const stockQuantity = product.Quantity;
-
                 const updatedQuantity = stockQuantity - quantity;
                 if (quantity <= stockQuantity) {
                     try {
@@ -221,7 +224,14 @@ export default {
 
                         const response = await CartService.addToCart(data);
                         if (response.status === 200) {
-                            alert("Thêm sản phẩm vào giỏ hàng thành công");
+                            // alert("Thêm sản phẩm vào giỏ hàng thành công");
+
+                            Swal.fire(
+                                "",
+                                "Thêm sản phẩm vào giỏ hàng thành công!",
+                                "success"
+                            );
+
                             this.quantity = 1; // Đặt lại giá trị quantity thành 1
 
 
@@ -229,18 +239,26 @@ export default {
                             const dataquantity = {
                                 Quantity: updatedQuantity,
                             }
-
                             // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
                             const result = await ProductService.updateProduct(product._id, dataquantity);
                             if (result.status === 200) {
                                 console.log("Đã cập nhật số lượng trong kho");
+
+                                // Gọi lại phương thức fetchfindOneProduct() để làm mới giá trị trong kho
+                                await this.fetchfindOneProduct(product._id);
                             }
                         }
                     } catch (error) {
                         console.error('Lỗi:', error);
                     }
                 } else {
-                    alert("Số lượng bạn mua vượt quá số lượng có trong kho");
+                    // alert("Số lượng bạn mua vượt quá số lượng có trong kho");
+
+                    Swal.fire(
+                        "",
+                        "Số lượng bạn mua vượt quá số lượng có trong kho. <br> Vui lòng chọn lại!",
+                        "warning"
+                    );
                 }
 
 
@@ -290,6 +308,7 @@ export default {
     padding: 4px 15px;
     margin-left: 5px;
     border-radius: 50%;
+    cursor: pointer;
 
 }
 

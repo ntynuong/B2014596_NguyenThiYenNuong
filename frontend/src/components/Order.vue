@@ -41,8 +41,7 @@
                                         <tbody>
                                             <tr v-for="product in item.details.ordercartItems" :key="product.productId">
                                                 <td>
-                                                    <img :key="image"
-                                                        :src="`http://localhost:3000/images/${product.images}`"
+                                                    <img :src="`http://localhost:3000/images/${product.images}`"
                                                         :alt="product.productname" class="product-image">
                                                 </td>
                                                 <td>{{ product.productname }}</td>

@@ -42,8 +42,8 @@
                     <tr v-for="(product, index) in products" :key="product._id">
                         <td>{{ index + 1 }}</td>
                         <td>
-                            <img :key="image" :src="`http://localhost:3000/images/${product.images}`"
-                                :alt="product.productname" class="product-image">
+                            <img :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
+                                class="product-image">
                         </td>
                         <td>{{ product.productname }}</td>
                         <td>{{ product.category }}</td>
@@ -69,6 +69,8 @@
 <script>
 import ProductService from '@/services/product.service';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 export default {
     name: 'Products',
     data() {
@@ -100,15 +102,28 @@ export default {
 
 
         async deleteProduct(productId) {
-            try {
-                if (confirm("Bạn chắc chắn muốn xóa sản phẩm?")) {
-                    console.log(productId);
+            const confirmation = await Swal.fire({
+                title: "Bạn chắc chắn muốn xóa sản phẩm?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Tiếp tục",
+                cancelButtonText: "Hủy"
+            });
+
+            if (confirmation.isConfirmed) {
+                try {
                     await ProductService.deleteProduct(productId);
-                    alert('Xóa sản phẩm thành công');
+                    // alert('Xóa sản phẩm thành công');
+                    Swal.fire(
+                        "",
+                        "Xóa sản phẩm trong giỏ hàng thành công!",
+                        "success"
+                    );
                     this.fetchgetAllProducts();
+                    // }
+                } catch (error) {
+                    console.error(error);
                 }
-            } catch (error) {
-                console.error(error);
             }
         },
 

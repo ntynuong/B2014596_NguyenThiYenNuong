@@ -29,7 +29,7 @@
                 <tbody>
                     <tr v-for="(item, index) in cartItems" :key="item.id">
                         <td></td>
-                        <td><img :key="image" :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
+                        <td><img :src="`http://localhost:3000/images/${item.images}`" :alt="item.productname"
                                 class="product-image"></td>
                         <td>{{ item.productname }}</td>
                         <td>{{ parseInt(item.price.replace(/\s/g, '')).toLocaleString('vi-VN') }}&#8363;</td>
@@ -80,6 +80,7 @@
 import { useCartStore } from '../stores/cart';
 import CartService from '@/services/cart.service';
 import ProductService from '@/services/product.service';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'Cart',
@@ -117,7 +118,6 @@ export default {
                 const itemQuantity = parseInt(item.quantity); // Chuyển đổi số lượng thành số nguyên
 
                 const totalPrice = itemPrice * itemQuantity;
-                console.log("totalprice", totalPrice);
                 return totalPrice.toLocaleString('vi-VN').replace(/,/g, ' '); // Định dạng số với dấu phân cách và thay thế dấu phân cách bằng khoảng trắng
             });
         },
@@ -130,15 +130,19 @@ export default {
             // Tăng giá trị quantity của item lên 1
             item.quantity++;
 
-            const stockQuantity = parseInt(item.Quantity);
+            const result = await ProductService.findOneProduct(item.productId);
+            const stockQuantity = parseInt(result.Quantity);
             const updatedQuantity = stockQuantity - 1;
-            console.log("kho", item.Quantity);
-            console.log("khomoi", updatedQuantity);
 
             const userId = localStorage.getItem('userId');
             const response = await CartService.updateCart(userId, item.productId, item.quantity);
             if (response.status === 200) {
-                alert("Cập nhật thành công");
+                // alert("Cập nhật thành công");
+                Swal.fire(
+                    "",
+                    "Cập nhật số lượng thành công!",
+                    "success"
+                );
 
 
                 const dataquantity = {
@@ -146,7 +150,7 @@ export default {
                 }
 
                 // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
-                const result = await ProductService.updateProduct(item._id, dataquantity);
+                const result = await ProductService.updateProduct(item.productId, dataquantity);
                 if (result.status === 200) {
                     console.log("Đã cập nhật số lượng trong kho");
                 }
@@ -160,12 +164,31 @@ export default {
             // Giảm giá trị quantity của item xuống 1
             if (item.quantity > 1) {
                 item.quantity--;
+
+                const result = await ProductService.findOneProduct(item.productId);
+                const stockQuantity = parseInt(result.Quantity);
+                const updatedQuantity = stockQuantity + 1;
+
                 const userId = localStorage.getItem('userId');
-                console.log("soluong", item.quantity);
-                console.log("item.productId", item.productId);
                 const response = await CartService.updateCart(userId, item.productId, item.quantity);
                 if (response.status === 200) {
-                    alert("Cập nhật thành công");
+                    // alert("Cập nhật thành công");
+                    Swal.fire(
+                        "",
+                        "Cập nhật số lượng thành công!",
+                        "success"
+                    );
+
+                    const dataquantity = {
+                        Quantity: updatedQuantity,
+                    }
+
+                    // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
+                    const result = await ProductService.updateProduct(item.productId, dataquantity);
+                    if (result.status === 200) {
+                        console.log("Đã cập nhật số lượng trong kho");
+                    }
+
                     this.getCart();
                 }
             }
@@ -185,18 +208,63 @@ export default {
 
         async deleteCart(item) {
 
-            try {
-                const userId = localStorage.getItem('userId');
-                const productId = item.productId;
-                const response = await CartService.deleteCart(userId, productId); // Thay đổi đường dẫn API tùy thuộc vào cấu trúc của ứng dụng của bạn
-                if (response.status === 200) {
-                    alert("Xóa sản phẩm trong giỏ hàng thành công!");
-                    this.getCart();
+            const confirmation = await Swal.fire({
+
+                title: "Xác nhận xóa",
+                text: "Bạn chắc chắn muốn xóa sản phẩm?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy"
+            });
+
+            if (confirmation.isConfirmed) {
+
+                // Thực hiện xóa sản phẩm
+
+
+                const cancel = item.quantity;
+
+                const result = await ProductService.findOneProduct(item.productId);
+                const stockQuantity = parseInt(result.Quantity);
+                const updatedQuantity = stockQuantity + cancel;
+
+
+                try {
+                    const userId = localStorage.getItem('userId');
+                    const productId = item.productId;
+                    const response = await CartService.deleteCart(userId, productId); // Thay đổi đường dẫn API tùy thuộc vào cấu trúc của ứng dụng của bạn
+                    if (response.status === 200) {
+                        // alert("Xóa sản phẩm trong giỏ hàng thành công!");
+                        Swal.fire(
+                            "",
+                            "Xóa sản phẩm trong giỏ hàng thành công!",
+                            "success"
+                        );
+
+
+
+
+                        const dataquantity = {
+                            Quantity: updatedQuantity,
+                        }
+                        // Cập nhật giá trị Quantity mới vào cơ sở dữ liệu
+                        const result = await ProductService.updateProduct(item.productId, dataquantity);
+                        if (result.status === 200) {
+                            console.log("Đã cập nhật số lượng trong kho");
+                        }
+
+                        this.getCart();
+                    }
+
+                } catch (error) {
+                    console.error("Lỗi", error);
                 }
 
-            } catch (error) {
-                console.error("Lỗi", error);
             }
+            // else {
+            //     Swal.fire("Hủy", "Bạn đã hủy xóa sản phẩm", "info");
+            // }
         },
 
 
@@ -217,7 +285,6 @@ export default {
                 this.totalQuantity = newCartItems.reduce((total, item) => total + parseInt(item.quantity), 0); //parseInt chuyen doi chuoi thanh so
                 const cartStore = useCartStore();
                 cartStore.setTotalQuantity(this.totalQuantity);
-                console.log("quantity", this.totalQuantity); // Gọi mutation để cập nhật biến totalQuantity trong store cart
             },
             immediate: true,
         },

@@ -21,7 +21,7 @@
                 <tr v-for="(product, index) in products" :key="product._id">
                     <td>{{ index + 1 }}</td>
                     <td>
-                        <img :key="image" :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
+                        <img :src="`http://localhost:3000/images/${product.images}`" :alt="product.productname"
                             class="product-image">
                     </td>
                     <td>{{ product.productname }}</td>

@@ -81,7 +81,7 @@
 import axios from 'axios';
 import ProductService from '@/services/product.service';
 import CategoryService from '@/services/category.service';
-
+import Swal from 'sweetalert2';
 
 export default {
 
@@ -142,7 +142,13 @@ export default {
                     .then(response => {
 
                         if (response.status === 200) {
-                            alert('Thêm sản phẩm thành công');
+                            // alert('Thêm sản phẩm thành công');
+                            Swal.fire(
+                                "",
+                                "Thêm sản phẩm mới thành công!",
+                                "success"
+                            );
+
                             this.$router.push('/admin/products');
                         }
 

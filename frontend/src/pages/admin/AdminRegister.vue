@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
     name: 'AdminRegister',
@@ -135,7 +136,12 @@ export default {
 
                         if (response.status === 200) {
                             console.log('response', response);
-                            alert('Đăng ký tài khoản thành công! Vui lòng đăng nhập để tiếp tục.');
+                            // alert('Đăng ký tài khoản thành công! Vui lòng đăng nhập để tiếp tục.');
+                            Swal.fire(
+                                "",
+                                "Đăng ký tài khoản thành công!<br> Vui lòng đăng nhập để tiếp tục.",
+                                "success"
+                            );
                             this.$router.push('/admin/login');
                         }
 
