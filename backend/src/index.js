@@ -46,7 +46,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(cors());
+
+// phan tich request of content-type application/json
 app.use(express.json());
+
+// phan tich request of content-type application/x-wwww-form-urlencoded
 app.use(express.urlencoded({
   extended: true
 }));

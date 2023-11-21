@@ -2,6 +2,7 @@ const UserService = require("../services/user.service");
 const AdminService = require("../services/admin.service");
 const MongoDB = require("../utils/mongodb.util");
 const ApiError = require("../api-error");
+const upload = require('./multer');
 
 
 exports.register = async (req, res, next) => {
@@ -27,7 +28,8 @@ exports.register = async (req, res, next) => {
 };
 
 
-exports.registerAdmin = async (req, res, next) => {
+exports.registerAdmin = [upload.none(), async (req, res, next) => {
+    console.log("body", req.body);
 
     const adminService = new AdminService(MongoDB.client);
     const emailExits = await adminService.findByEmail(req.body.email);
@@ -48,7 +50,7 @@ exports.registerAdmin = async (req, res, next) => {
             )
         }
     }
-}
+}];
 
 
 

@@ -18,7 +18,6 @@ router.route('/search')
 
 
 
-
 router.route('/')
     .get(products.getAllProducts)
     .post(products.createProduct);

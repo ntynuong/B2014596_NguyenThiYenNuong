@@ -374,3 +374,4 @@ exports.searchProduct = [upload.none(), async (req, res, next) => {
     }
 
 }];
+
