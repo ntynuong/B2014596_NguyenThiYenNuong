@@ -149,14 +149,13 @@ export default {
     components: { LoginIcon },
 
     setup() {
-        // const store = useCartStore();
+        // mới
 
-        // const total = computed(() => {
-        //     return store.getTotalQuantity;
-        // });
+        const cartStore = useCartStore();
+        const totalQuantity = computed(() => cartStore.getTotalQuantity);
 
-
-        const totalQuantity = ref(0);
+        // dang sai 22-11
+        // const totalQuantity = ref(0);
         const cartItems = ref([]);
         const category = '';
         const categories = ref([]);
@@ -198,12 +197,13 @@ export default {
             }
         };
 
+        //dang sai 22-11
         // Tạo một watcher để theo dõi sự thay đổi của cartItems.value
-        watch(cartItems, (newCartItems) => {
-            totalQuantity.value = newCartItems.reduce((total, product) => {
-                return total + parseInt(product.quantity);
-            }, 0);
-        });
+        // watch(cartItems, (newCartItems) => {
+        //     totalQuantity.value = newCartItems.reduce((total, product) => {
+        //         return total + parseInt(product.quantity);
+        //     }, 0);
+        // });
 
         // Lưu totalQuantity vào local storage
         localStorage.setItem('totalQuantity', totalQuantity.value.toString());

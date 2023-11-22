@@ -46,14 +46,14 @@ import axios from 'axios';
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
-
-
+import CartService from '@/services/cart.service';
+import { useCartStore } from '../stores/cart';
 
 
 export default {
     setup() {
         const router = useRouter();
-
+        const cartItems = ref([]);
         const authStore = useAuthStore();
 
         const email = ref('');
@@ -118,6 +118,9 @@ export default {
                             const fullname = response.data.payload.fullname;
 
 
+                            // Gọi hàm getCart() trong khối setup()
+
+
                             // Lưu trạng thái đăng nhập vào local storage
                             router.push('/');
                             localStorage.setItem('isLoggedIn', 'true');
@@ -127,10 +130,11 @@ export default {
                             console.log("dangnhap", dangnhap);
                             localStorage.setItem('userId', userId);
                             const maso = localStorage.getItem('userId');
+
                             console.log("maso", maso);
 
 
-
+                            getCart();
 
 
                         }
@@ -151,6 +155,32 @@ export default {
             }
         };
 
+
+
+        async function getCart() {
+            try {
+                const userId = localStorage.getItem('userId');
+                const response = await CartService.getCart(userId);
+                cartItems.value = response;
+
+                // Tính tổng của các phần tử trong mảng cartItems
+                const totalQuantity = cartItems.value.reduce((total, item) => total + parseInt(item.quantity), 0);
+
+                console.log("tong", totalQuantity); // Kết quả tổng số lượng
+
+                const cartStore = useCartStore();
+                cartStore.setTotalQuantity(totalQuantity);
+
+
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+
+
         return {
             email,
             password,
@@ -160,6 +190,8 @@ export default {
             inputType,
             togglePasswordVisibility,
             submitForm,
+
+            cartItems,
         };
     }
 };

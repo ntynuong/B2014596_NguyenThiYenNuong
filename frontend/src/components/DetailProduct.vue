@@ -75,6 +75,7 @@ import ProductService from '@/services/product.service';
 import CartService from '@/services/cart.service';
 import Swal from 'sweetalert2';
 import { useAuthStore } from '../stores/auth';
+import { useCartStore } from '../stores/cart';
 
 export default {
     name: 'DetailProduct',
@@ -172,6 +173,12 @@ export default {
                                 "success"
                             );
 
+                            const cartStore = useCartStore();
+
+                            // Gọi hành động setTotalQuantity trong store để tăng totalQuantity lên 1
+                            cartStore.setTotalQuantity(cartStore.getTotalQuantity + 1);
+
+
                             const dataquantity = {
                                 Quantity: updatedQuantity,
                             }
@@ -231,6 +238,16 @@ export default {
                                 "Thêm sản phẩm vào giỏ hàng thành công!",
                                 "success"
                             );
+
+
+                            const cartStore = useCartStore();
+                            const currentTotalQuantity = cartStore.getTotalQuantity;
+                            const newTotalQuantity = currentTotalQuantity + this.quantity;
+                            // Gọi hành động setTotalQuantity trong store để cập nhật totalQuantity mới
+                            cartStore.setTotalQuantity(newTotalQuantity);
+
+
+
 
                             this.quantity = 1; // Đặt lại giá trị quantity thành 1
 

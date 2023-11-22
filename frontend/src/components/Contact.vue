@@ -4,10 +4,7 @@
         <div class="center">LIÊN HỆ</div>
     </div>
 
-    <!-- <div class="banner-contact">
-        <img class="img-fuild" src="/img/about-noithat-13.png" alt="Cinque Terre">
-        <div class="center">LIÊN HỆ</div>
-    </div> -->
+
 
 
     <div class="container ">

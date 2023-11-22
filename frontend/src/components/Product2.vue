@@ -67,6 +67,7 @@ import CategoryService from '@/services/category.service';
 import CartService from '@/services/cart.service';
 import ProductService from '@/services/product.service';
 import { useAuthStore } from '../stores/auth';
+import { useCartStore } from '../stores/cart';
 import Swal from 'sweetalert2';
 
 export default {
@@ -149,6 +150,12 @@ export default {
                                 "Thêm sản phẩm vào giỏ hàng thành công!",
                                 "success"
                             );
+
+                            const cartStore = useCartStore();
+
+                            // Gọi hành động setTotalQuantity trong store để tăng totalQuantity lên 1
+                            cartStore.setTotalQuantity(cartStore.getTotalQuantity + 1);
+
 
 
                             const dataquantity = {
